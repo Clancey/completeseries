@@ -7,6 +7,10 @@
  * If not configured, returns "not_configured" status so client uses local storage.
  */
 
+// Prevent PHP errors from corrupting JSON output
+error_reporting(0);
+ini_set('display_errors', '0');
+
 header("Content-Type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
 

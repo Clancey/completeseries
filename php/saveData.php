@@ -7,6 +7,10 @@
  * Uses atomic write (temp file + rename) to prevent corruption.
  */
 
+// Prevent PHP errors from corrupting JSON output
+error_reporting(0);
+ini_set('display_errors', '0');
+
 header("Content-Type: application/json");
 
 // Check if server is configured

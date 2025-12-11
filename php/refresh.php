@@ -6,6 +6,10 @@
  * fetches all libraries and series data, and saves to persistent storage.
  */
 
+// Prevent PHP errors from corrupting JSON output
+error_reporting(0);
+ini_set('display_errors', '0');
+
 header("Content-Type: application/json");
 
 $dataFilePath = "/data/completeseries.json";
