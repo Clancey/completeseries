@@ -551,7 +551,7 @@ label {
 /* Release date badge for unreleased books */
 .release-date-badge {
   position: absolute;
-  bottom: 3.5rem;
+  top: 0.625rem;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
