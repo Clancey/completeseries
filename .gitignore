@@ -10,3 +10,9 @@ dist
 php/.DS_Store
 scripts/.DS_Store
 styles/.DS_Store
+
+# Server configuration (contains credentials)
+.env
+
+# Local data directory
+data/

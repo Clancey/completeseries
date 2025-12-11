@@ -6,3 +6,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:80"
+    volumes:
+      - completeseries_data:/data
+    environment:
+      - ABS_URL=${ABS_URL:-}
+      - ABS_USERNAME=${ABS_USERNAME:-}
+      - ABS_PASSWORD=${ABS_PASSWORD:-}
+      - ABS_API_KEY=${ABS_API_KEY:-}
+      - ABS_USE_API_KEY=${ABS_USE_API_KEY:-false}
+      - AUDIBLE_REGION=${AUDIBLE_REGION:-us}
+
+volumes:
+  completeseries_data:

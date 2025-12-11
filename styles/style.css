@@ -1522,3 +1522,78 @@ button.accent-button-inline-right.active {
     opacity: 1;
   }
 }
+
+/* ---------- SERVER SYNC STATUS ---------- */
+#serverRefreshContainer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.server-status {
+  font-size: 0.875rem;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  background: var(--secondary-bg);
+}
+
+.server-status.connected {
+  color: #4ade80;
+}
+
+.server-status.success {
+  color: #4ade80;
+}
+
+.server-status.error {
+  color: var(--danger);
+}
+
+.last-refresh {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+/* ---------- SERVER DATA OPTION ---------- */
+.server-data-option {
+  background: var(--secondary-bg);
+  border: 2px solid var(--accent);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.server-option-content h3 {
+  color: var(--accent);
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.server-option-content p {
+  margin: 0.5rem 0;
+  color: var(--muted);
+}
+
+.server-option-content button {
+  margin: 0.5rem 0.25rem;
+}
+
+.server-option-content button.secondary {
+  background: var(--secondary-bg);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.server-option-content button.secondary:hover {
+  background: var(--accent);
+  color: var(--primary-bg);
+}
+
+.server-option-divider {
+  margin-top: 1.5rem !important;
+  font-size: 0.875rem;
+  color: var(--muted);
+}

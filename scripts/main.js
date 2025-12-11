@@ -35,6 +35,8 @@ import {
   computeStoragePresence,
   ensureWorkingMemoryReady,
 } from "./localStorage.js";
+import { checkServerStatus, triggerServerRefresh, isServerConfigured, getServerLibraryData, getServerAudibleRegion } from "./serverSync.js";
+import { syncHiddenItemsWithServer } from "./visibility.js";
 
 // Stores current data fetched from AudiobookShelf
 export let existingContent;
@@ -51,6 +53,25 @@ export let libraryArrayObject = {};
  */
 document.addEventListener("DOMContentLoaded", async () => {
   await ensureWorkingMemoryReady();
+
+  // Check server configuration and sync hidden items if configured
+  const serverStatus = await checkServerStatus();
+  if (serverStatus.configured) {
+    console.log("Server storage configured, syncing hidden items...");
+    await syncHiddenItemsWithServer();
+    initServerRefreshUI(serverStatus);
+
+    // Check if server has cached data - if so, offer to use it
+    const serverData = await getServerLibraryData();
+    if (serverData.hasData) {
+      console.log("Server has cached library data, showing use server data option...");
+      showUseServerDataOption(serverData);
+    } else {
+      // Server configured but no data yet - show prompt to refresh first
+      showServerNeedsRefreshOption();
+    }
+  }
+
   // Set up UI event listeners and populate hidden series menu
   initializeUIInteractions();
   populateHiddenItemsMenu();
@@ -332,4 +353,264 @@ function populateDebugViewerIfResultsExist() {
   // Initialize the modal and show related UI controls.
   initDebugModal();
   showDebugButtons();
+}
+
+/**
+ * Initializes the server refresh UI when server is configured.
+ * Shows the refresh button and status in the settings panel.
+ *
+ * @param {Object} serverStatus - Server configuration status from checkServerStatus()
+ */
+function initServerRefreshUI(serverStatus) {
+  const container = document.getElementById("serverRefreshContainer");
+  if (!container) return;
+
+  // Show the container
+  container.classList.remove("menuHideable");
+  container.style.display = "block";
+
+  // Update status text
+  const statusEl = document.getElementById("serverStatus");
+  if (statusEl) {
+    statusEl.textContent = `Connected to: ${serverStatus.serverUrl || "Server"}`;
+    statusEl.classList.add("connected");
+  }
+
+  // Update last refresh time
+  updateLastRefreshDisplay(serverStatus.lastRefresh);
+
+  // Wire up refresh button
+  const refreshBtn = document.getElementById("triggerRefresh");
+  if (refreshBtn) {
+    refreshBtn.disabled = false;
+    refreshBtn.addEventListener("click", handleServerRefresh);
+  }
+}
+
+/**
+ * Handles the server refresh button click.
+ * Triggers a server-side data refresh and updates the UI.
+ */
+async function handleServerRefresh() {
+  const refreshBtn = document.getElementById("triggerRefresh");
+  const statusEl = document.getElementById("serverStatus");
+
+  if (refreshBtn) {
+    refreshBtn.disabled = true;
+    refreshBtn.textContent = "Refreshing...";
+  }
+
+  if (statusEl) {
+    statusEl.textContent = "Refreshing server data...";
+  }
+
+  try {
+    const result = await triggerServerRefresh();
+
+    if (result.success) {
+      if (statusEl) {
+        statusEl.textContent = `Refreshed: ${result.seriesCount} series, ${result.bookCount} books`;
+        statusEl.classList.add("success");
+      }
+      updateLastRefreshDisplay(result.lastRefresh);
+    } else {
+      if (statusEl) {
+        statusEl.textContent = `Error: ${result.error}`;
+        statusEl.classList.add("error");
+      }
+    }
+  } catch (error) {
+    if (statusEl) {
+      statusEl.textContent = `Error: ${error.message}`;
+      statusEl.classList.add("error");
+    }
+  } finally {
+    if (refreshBtn) {
+      refreshBtn.disabled = false;
+      refreshBtn.textContent = "Refresh Server Data";
+    }
+  }
+}
+
+/**
+ * Updates the last refresh time display.
+ *
+ * @param {string|null} lastRefresh - ISO date string of last refresh
+ */
+function updateLastRefreshDisplay(lastRefresh) {
+  const lastRefreshEl = document.getElementById("lastRefreshTime");
+  if (!lastRefreshEl) return;
+
+  if (lastRefresh) {
+    const date = new Date(lastRefresh);
+    lastRefreshEl.textContent = `Last refresh: ${date.toLocaleString()}`;
+  } else {
+    lastRefreshEl.textContent = "Never refreshed";
+  }
+}
+
+/**
+ * Shows an option to use server-cached data instead of logging in manually.
+ * Adds a button above the login form.
+ *
+ * @param {Object} serverData - Server data containing seriesFirstASIN, seriesAllASIN, lastRefresh
+ */
+function showUseServerDataOption(serverData) {
+  const formContainer = document.getElementById("form-container");
+  if (!formContainer) return;
+
+  // Create the server data option container
+  const serverOptionDiv = document.createElement("div");
+  serverOptionDiv.id = "serverDataOption";
+  serverOptionDiv.className = "server-data-option";
+
+  const lastRefreshDate = serverData.lastRefresh
+    ? new Date(serverData.lastRefresh).toLocaleString()
+    : "Unknown";
+
+  const region = getServerAudibleRegion().toUpperCase();
+  serverOptionDiv.innerHTML = `
+    <div class="server-option-content">
+      <h3>Server Data Available</h3>
+      <p>Your server has cached library data (Last updated: ${lastRefreshDate})</p>
+      <p>${serverData.seriesFirstASIN.length} series found · Audible region: ${region}</p>
+      <button id="useServerDataBtn" class="accent-button">Use Server Data</button>
+      <button id="refreshServerDataBtn" class="accent-button secondary">Refresh Server Data</button>
+      <p class="server-option-divider">— or login manually below —</p>
+    </div>
+  `;
+
+  // Insert before the form
+  formContainer.insertBefore(serverOptionDiv, formContainer.firstChild);
+
+  // Wire up buttons
+  document.getElementById("useServerDataBtn").addEventListener("click", () => {
+    processServerData(serverData);
+  });
+
+  document.getElementById("refreshServerDataBtn").addEventListener("click", async () => {
+    await refreshAndUseServerData();
+  });
+}
+
+/**
+ * Shows a prompt when server is configured but has no data yet.
+ */
+function showServerNeedsRefreshOption() {
+  const formContainer = document.getElementById("form-container");
+  if (!formContainer) return;
+
+  const serverOptionDiv = document.createElement("div");
+  serverOptionDiv.id = "serverDataOption";
+  serverOptionDiv.className = "server-data-option";
+
+  const region = getServerAudibleRegion().toUpperCase();
+  serverOptionDiv.innerHTML = `
+    <div class="server-option-content">
+      <h3>Server Configured</h3>
+      <p>Your server is configured but has no cached data yet.</p>
+      <p>Audible region: ${region}</p>
+      <button id="refreshServerDataBtn" class="accent-button">Fetch Library Data from Server</button>
+      <p class="server-option-divider">— or login manually below —</p>
+    </div>
+  `;
+
+  formContainer.insertBefore(serverOptionDiv, formContainer.firstChild);
+
+  document.getElementById("refreshServerDataBtn").addEventListener("click", async () => {
+    await refreshAndUseServerData();
+  });
+}
+
+/**
+ * Refreshes server data and then uses it.
+ */
+async function refreshAndUseServerData() {
+  const refreshBtn = document.getElementById("refreshServerDataBtn");
+  const useBtn = document.getElementById("useServerDataBtn");
+
+  if (refreshBtn) {
+    refreshBtn.disabled = true;
+    refreshBtn.textContent = "Refreshing...";
+  }
+  if (useBtn) useBtn.disabled = true;
+
+  try {
+    setMessage("Fetching library data from server...");
+    toggleElementVisibility("message", true, "block");
+
+    const result = await triggerServerRefresh();
+
+    if (result.success) {
+      // Now get the fresh data and use it
+      const serverData = await getServerLibraryData();
+      if (serverData.hasData) {
+        processServerData(serverData);
+        return;
+      }
+    }
+
+    setMessage(`Error: ${result.error || "Failed to refresh server data"}`);
+  } catch (error) {
+    setMessage(`Error: ${error.message}`);
+  } finally {
+    if (refreshBtn) {
+      refreshBtn.disabled = false;
+      refreshBtn.textContent = "Refresh Server Data";
+    }
+    if (useBtn) useBtn.disabled = false;
+  }
+}
+
+/**
+ * Processes server-cached data directly without manual login.
+ * Uses the same flow as manual login but with server data.
+ *
+ * @param {Object} serverData - Server data containing seriesFirstASIN, seriesAllASIN
+ */
+async function processServerData(serverData) {
+  // Hide the server option UI
+  const serverOptionDiv = document.getElementById("serverDataOption");
+  if (serverOptionDiv) serverOptionDiv.style.display = "none";
+
+  resetUserInterfaceAndStartLoadingProcess();
+  await beginRun({ fresh: "auto" });
+
+  try {
+    setMessage("Using server-cached library data...");
+
+    // Build existingContent from server data
+    existingContent = {
+      seriesFirstASIN: serverData.seriesFirstASIN,
+      seriesAllASIN: serverData.seriesAllASIN,
+    };
+
+    if (!existingContent.seriesFirstASIN?.length) {
+      setMessage("No series found in server data. Try refreshing.");
+      hideSpinner();
+      toggleElementVisibility("form-container", true);
+      if (serverOptionDiv) serverOptionDiv.style.display = "block";
+      return;
+    }
+
+    // Set the form's region dropdown to match server config
+    // This is needed because isBookViable() reads directly from the form
+    const serverRegion = getServerAudibleRegion();
+    const regionSelect = document.getElementById("audibleRegion");
+    if (regionSelect) {
+      regionSelect.value = serverRegion;
+    }
+
+    // Get form data for filter settings
+    const formData = getFormData();
+
+    // Process the data
+    await fetchAndDisplayResults(existingContent, formData);
+  } catch (error) {
+    console.error("Error processing server data:", error);
+    setMessage(`Error: ${error.message}`);
+    hideSpinner();
+    toggleElementVisibility("form-container", true);
+    if (serverOptionDiv) serverOptionDiv.style.display = "block";
+  }
 }

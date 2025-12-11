@@ -6,6 +6,7 @@ import {
   loadMetadataFromLocalStorage,
   storeUpdateFullValueForLocalStorage,
 } from "./localStorage.js";
+import { saveHiddenItemsToServer, syncHiddenItems } from "./serverSync.js";
 
 // Local storage key value
 const VISIBILITY_KEY = "hiddenItems";
@@ -24,13 +25,16 @@ export function getHiddenItems() {
 }
 
 /**
- * Stores hidden items into localStorage.
+ * Stores hidden items into localStorage and syncs to server (if configured).
  * @param {Array<Object>} items - List of hidden items to persist.
  */
 export function setHiddenItems(items) {
   try {
     const sortedItems = sortBySeriesThenTitle(items);
     storeUpdateFullValueForLocalStorage(sortedItems, VISIBILITY_KEY);
+
+    // Also save to server (fire-and-forget, non-blocking)
+    saveHiddenItemsToServer(sortedItems);
   } catch (error) {
     console.error("Failed to store hidden items to localStorage:", error);
   }
@@ -140,4 +144,23 @@ export function isCurrentlyHiddenByAsin(asin) {
 export function totalHiddenInSeries(seriesName) {
   const hiddenItems = getHiddenItems();
   return hiddenItems.filter((item) => item.type === "book" && item.series === seriesName).length;
+}
+
+/**
+ * Syncs hidden items with the server (if configured).
+ * Merges local and server hidden items, with server as source of truth.
+ * Updates local storage with merged result.
+ *
+ * @returns {Promise<Array>} - The merged hidden items array
+ */
+export async function syncHiddenItemsWithServer() {
+  const localItems = getHiddenItems();
+  const mergedItems = await syncHiddenItems(localItems);
+
+  // Update local storage with merged data (only if different)
+  if (mergedItems.length !== localItems.length) {
+    storeUpdateFullValueForLocalStorage(mergedItems, VISIBILITY_KEY);
+  }
+
+  return mergedItems;
 }
