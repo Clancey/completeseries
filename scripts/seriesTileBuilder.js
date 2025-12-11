@@ -9,6 +9,7 @@ import {
   addSeriesGridContainer,
   addUpcomingBadge,
   isReleaseDateInFuture,
+  formatReleaseDateForBadge,
 } from "./tileElementFactory.js";
 import { addTextElement, addDivElement, addImageElement } from "./elementFactory.js";
 import { getTitleContent } from "./metadataUtils.js";
@@ -72,10 +73,12 @@ function headerBuilder(parentElement, groupedMissingBooks) {
 function generateSeriesTiles(seriesData, outputContainer) {
   const missingBooksCount = seriesData.books.length;
   const seriesTitle = seriesData.series;
-  const firstBook = seriesData.books[0];
+
+  // Find the first non-hidden book for the cover image
+  const coverBook = findFirstVisibleBook(seriesData.books, seriesTitle) || seriesData.books[0];
 
   // Build the hidden item object for series visibility
-  const hiddenItem = hideItemObjectBuilder(firstBook, seriesTitle, "series");
+  const hiddenItem = hideItemObjectBuilder(coverBook, seriesTitle, "series");
   const isHidden = isCurrentlyHidden(hiddenItem);
 
   // Create tile container and inner layout
@@ -90,14 +93,55 @@ function generateSeriesTiles(seriesData, outputContainer) {
 
   addSeriesBadge(tileInnerContainer, visibleMissingCount);
 
-  // Check if any book in the series has a future release date
-  const hasUpcomingBook = seriesData.books.some((book) => isReleaseDateInFuture(book.releaseDate));
-  if (hasUpcomingBook) addUpcomingBadge(tileInnerContainer);
+  // Find the earliest upcoming release date and show badge with date
+  const nextReleaseDate = findEarliestUpcomingRelease(seriesData.books);
+  if (nextReleaseDate) {
+    const formattedDate = formatReleaseDateForBadge(nextReleaseDate);
+    addUpcomingBadge(tileInnerContainer, formattedDate);
+  }
 
-  addSeriesImage(tileInnerContainer, firstBook, seriesTitle);
+  addSeriesImage(tileInnerContainer, coverBook, seriesTitle);
   addSeriesTitle(tileInnerContainer, seriesTitle);
 
   // Add visibility toggle (eye icon)
   const eyeBadge = addEyeBadge(tileInnerContainer);
   addEyeIcon(eyeBadge, tileContainerWrapper, hiddenItem, isHidden);
+}
+
+/**
+ * Finds the first non-hidden book in a series for use as the cover image.
+ *
+ * @param {Array<Object>} books - Array of book metadata objects.
+ * @param {string} seriesTitle - The series name for building hidden item checks.
+ * @returns {Object|null} The first visible book, or null if all are hidden.
+ */
+function findFirstVisibleBook(books, seriesTitle) {
+  for (const book of books) {
+    const hiddenItem = hideItemObjectBuilder(book, seriesTitle, "book");
+    if (!isCurrentlyHidden(hiddenItem)) {
+      return book;
+    }
+  }
+  return null;
+}
+
+/**
+ * Finds the earliest upcoming release date from a list of books.
+ *
+ * @param {Array<Object>} books - Array of book metadata objects.
+ * @returns {Date|null} The earliest future release date, or null if none.
+ */
+function findEarliestUpcomingRelease(books) {
+  let earliestDate = null;
+
+  for (const book of books) {
+    if (isReleaseDateInFuture(book.releaseDate)) {
+      const releaseDate = new Date(book.releaseDate);
+      if (!earliestDate || releaseDate < earliestDate) {
+        earliestDate = releaseDate;
+      }
+    }
+  }
+
+  return earliestDate;
 }

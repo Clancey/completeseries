@@ -213,8 +213,10 @@ export function addReleaseDateBadge(parentElement, releaseDate) {
  * Creates and appends an "Upcoming" indicator badge for series with unreleased books.
  *
  * @param {HTMLElement} parentElement - The container to append the badge to.
+ * @param {string} [releaseDate] - Optional formatted release date to display.
  * @returns {HTMLDivElement} The created upcoming badge element.
  */
-export function addUpcomingBadge(parentElement) {
-  return addDivElement({ className: "upcoming-badge", textContent: "Upcoming" }, parentElement);
+export function addUpcomingBadge(parentElement, releaseDate) {
+  const badgeText = releaseDate ? `Upcoming: ${releaseDate}` : "Upcoming";
+  return addDivElement({ className: "upcoming-badge", textContent: badgeText }, parentElement);
 }
