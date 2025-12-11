@@ -105,7 +105,7 @@ export function toggleHiddenItemVisibilityMenu(eyeIcon) {
 /**
  * Checks if a given book or series is currently hidden.
  *
- * @param {Object} item - The item to check (must contain type and series).
+ * @param {Object} item - The item to check (must contain type, series, and asin for books).
  * @returns {boolean} True if the item is hidden, otherwise false.
  */
 export function isCurrentlyHidden(item) {
@@ -114,8 +114,9 @@ export function isCurrentlyHidden(item) {
     (hiddenItem) =>
       hiddenItem.type === item.type &&
       hiddenItem.series === item.series &&
-      // If it's a book, title must also match
-      (item.type === "series" || hiddenItem.title === item.title)
+      // For books, match by ASIN (unique identifier) to handle same-title editions
+      // For series, match by series name only
+      (item.type === "series" || hiddenItem.asin === item.asin)
   );
 }
 
