@@ -75,11 +75,31 @@ function loadExistingData($path) {
 
 function saveData($path, $data) {
     $dir = dirname($path);
-    if (!is_dir($dir)) mkdir($dir, 0755, true);
+    if (!is_dir($dir)) {
+        if (!@mkdir($dir, 0755, true)) {
+            throw new Exception("Cannot create data directory: $dir");
+        }
+    }
+
+    if (!is_writable($dir)) {
+        throw new Exception("Data directory is not writable: $dir");
+    }
 
     $temp = $path . ".tmp." . uniqid();
-    file_put_contents($temp, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-    rename($temp, $path);
+    $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+    if ($json === false) {
+        throw new Exception("Failed to encode data as JSON: " . json_last_error_msg());
+    }
+
+    if (file_put_contents($temp, $json) === false) {
+        throw new Exception("Failed to write temporary file: $temp");
+    }
+
+    if (!rename($temp, $path)) {
+        @unlink($temp);
+        throw new Exception("Failed to rename temp file to: $path");
+    }
 }
 
 function updateRefreshStatus($status) {
