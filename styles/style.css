@@ -1631,3 +1631,75 @@ button.accent-button-inline-right.active {
   font-size: 0.875rem;
   color: var(--muted);
 }
+
+/* Server mode (when credentials configured via environment) */
+.server-data-option.server-mode {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.server-data-option.server-mode .logoContainer {
+  margin-bottom: 1rem;
+}
+
+.server-data-option.server-mode .logoContainer img {
+  max-width: 120px;
+  height: auto;
+}
+
+.server-data-option.server-mode .headingContainer {
+  margin-bottom: 2rem;
+}
+
+.server-data-option.server-mode .headingContainer h2 {
+  color: var(--text);
+  margin: 0;
+}
+
+.server-data-option.server-mode .headingContainer h4 {
+  color: var(--muted);
+  font-weight: 400;
+  margin: 0.25rem 0 0;
+}
+
+.server-status-card {
+  background: var(--secondary-bg);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.server-status-info {
+  margin-bottom: 1.25rem;
+}
+
+.server-status-info .cache-age {
+  font-size: 1.1rem;
+  color: var(--text);
+  margin: 0 0 0.5rem;
+}
+
+.server-status-info .cache-age strong {
+  color: var(--accent);
+}
+
+.server-status-info .server-stats {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.server-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.server-buttons button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+}

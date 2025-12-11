@@ -450,8 +450,34 @@ function updateLastRefreshDisplay(lastRefresh) {
 }
 
 /**
- * Shows an option to use server-cached data instead of logging in manually.
- * Adds a button above the login form.
+ * Formats a time difference as a human-readable string (e.g., "2 hours ago", "3 days ago").
+ *
+ * @param {string|Date} dateString - The date to compare against now.
+ * @returns {string} Human-readable time difference.
+ */
+function formatCacheAge(dateString) {
+  if (!dateString) return "Unknown";
+
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return "Unknown";
+
+  const now = new Date();
+  const diffMs = now - date;
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return "Just now";
+  if (diffMins < 60) return `${diffMins} minute${diffMins === 1 ? "" : "s"} ago`;
+  if (diffHours < 24) return `${diffHours} hour${diffHours === 1 ? "" : "s"} ago`;
+  if (diffDays < 30) return `${diffDays} day${diffDays === 1 ? "" : "s"} ago`;
+
+  return date.toLocaleDateString();
+}
+
+/**
+ * Shows the server mode UI when credentials are configured via environment.
+ * Hides the login form completely.
  *
  * @param {Object} serverData - Server data containing seriesFirstASIN, seriesAllASIN, lastRefresh
  */
@@ -459,29 +485,47 @@ function showUseServerDataOption(serverData) {
   const formContainer = document.getElementById("form-container");
   if (!formContainer) return;
 
-  // Create the server data option container
+  // Hide the login form - we don't need it when server has credentials
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) loginForm.style.display = "none";
+
+  // Create the server mode UI
   const serverOptionDiv = document.createElement("div");
   serverOptionDiv.id = "serverDataOption";
-  serverOptionDiv.className = "server-data-option";
+  serverOptionDiv.className = "server-data-option server-mode";
 
-  const lastRefreshDate = serverData.lastRefresh
-    ? new Date(serverData.lastRefresh).toLocaleString()
-    : "Unknown";
-
+  const cacheAge = formatCacheAge(serverData.lastRefresh);
   const region = getServerAudibleRegion().toUpperCase();
+
   serverOptionDiv.innerHTML = `
     <div class="server-option-content">
-      <h3>Server Data Available</h3>
-      <p>Your server has cached library data (Last updated: ${lastRefreshDate})</p>
-      <p>${serverData.seriesFirstASIN.length} series found · Audible region: ${region}</p>
-      <button id="useServerDataBtn" class="accent-button">Use Server Data</button>
-      <button id="refreshServerDataBtn" class="accent-button secondary">Refresh Server Data</button>
-      <p class="server-option-divider">— or login manually below —</p>
+      <div class="logoContainer">
+        <img alt="Site Logo" src="/assets/logo-background-transparent.webp" />
+      </div>
+      <div class="headingContainer">
+        <h2>Complete your collection</h2>
+        <h4>Every series brought together</h4>
+      </div>
+      <div class="server-status-card">
+        <div class="server-status-info">
+          <p class="cache-age">Data cached: <strong>${cacheAge}</strong></p>
+          <p class="server-stats">${serverData.seriesFirstASIN.length} series · Audible region: ${region}</p>
+        </div>
+        <div class="server-buttons">
+          <button id="useServerDataBtn" class="accent-button">Use Cached Data</button>
+          <button id="refreshServerDataBtn" class="accent-button secondary">Refresh from Server</button>
+        </div>
+      </div>
     </div>
   `;
 
-  // Insert before the form
+  // Insert at the beginning
   formContainer.insertBefore(serverOptionDiv, formContainer.firstChild);
+
+  // Set the region dropdown to match server config (for filter logic)
+  const serverRegion = getServerAudibleRegion();
+  const regionSelect = document.getElementById("audibleRegion");
+  if (regionSelect) regionSelect.value = serverRegion;
 
   // Wire up buttons
   document.getElementById("useServerDataBtn").addEventListener("click", () => {
@@ -495,27 +539,48 @@ function showUseServerDataOption(serverData) {
 
 /**
  * Shows a prompt when server is configured but has no data yet.
+ * Hides the login form completely.
  */
 function showServerNeedsRefreshOption() {
   const formContainer = document.getElementById("form-container");
   if (!formContainer) return;
 
+  // Hide the login form - we don't need it when server has credentials
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) loginForm.style.display = "none";
+
   const serverOptionDiv = document.createElement("div");
   serverOptionDiv.id = "serverDataOption";
-  serverOptionDiv.className = "server-data-option";
+  serverOptionDiv.className = "server-data-option server-mode";
 
   const region = getServerAudibleRegion().toUpperCase();
   serverOptionDiv.innerHTML = `
     <div class="server-option-content">
-      <h3>Server Configured</h3>
-      <p>Your server is configured but has no cached data yet.</p>
-      <p>Audible region: ${region}</p>
-      <button id="refreshServerDataBtn" class="accent-button">Fetch Library Data from Server</button>
-      <p class="server-option-divider">— or login manually below —</p>
+      <div class="logoContainer">
+        <img alt="Site Logo" src="/assets/logo-background-transparent.webp" />
+      </div>
+      <div class="headingContainer">
+        <h2>Complete your collection</h2>
+        <h4>Every series brought together</h4>
+      </div>
+      <div class="server-status-card">
+        <div class="server-status-info">
+          <p class="cache-age">No cached data yet</p>
+          <p class="server-stats">Audible region: ${region}</p>
+        </div>
+        <div class="server-buttons">
+          <button id="refreshServerDataBtn" class="accent-button">Fetch Library Data</button>
+        </div>
+      </div>
     </div>
   `;
 
   formContainer.insertBefore(serverOptionDiv, formContainer.firstChild);
+
+  // Set the region dropdown to match server config (for filter logic)
+  const serverRegion = getServerAudibleRegion();
+  const regionSelect = document.getElementById("audibleRegion");
+  if (regionSelect) regionSelect.value = serverRegion;
 
   document.getElementById("refreshServerDataBtn").addEventListener("click", async () => {
     await refreshAndUseServerData();
