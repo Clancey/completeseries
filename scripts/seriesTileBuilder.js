@@ -7,6 +7,8 @@ import {
   addSeriesTitle,
   addEyeBadge,
   addSeriesGridContainer,
+  addUpcomingBadge,
+  isReleaseDateInFuture,
 } from "./tileElementFactory.js";
 import { addTextElement, addDivElement, addImageElement } from "./elementFactory.js";
 import { getTitleContent } from "./metadataUtils.js";
@@ -87,6 +89,11 @@ function generateSeriesTiles(seriesData, outputContainer) {
   if (visibleMissingCount === 0) toggleElementVisibilityFullEntity(tileContainerWrapper, false);
 
   addSeriesBadge(tileInnerContainer, visibleMissingCount);
+
+  // Check if any book in the series has a future release date
+  const hasUpcomingBook = seriesData.books.some((book) => isReleaseDateInFuture(book.releaseDate));
+  if (hasUpcomingBook) addUpcomingBadge(tileInnerContainer);
+
   addSeriesImage(tileInnerContainer, firstBook, seriesTitle);
   addSeriesTitle(tileInnerContainer, seriesTitle);
 

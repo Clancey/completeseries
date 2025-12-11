@@ -162,3 +162,59 @@ export function addSeriesTitle(parentElement, textContentValue) {
 export function addEyeBadge(parentElement) {
   return addDivElement({ className: "eye-badge" }, parentElement);
 }
+
+/**
+ * Checks if a release date is in the future (today or later).
+ *
+ * @param {string|Date} releaseDate - The release date to check.
+ * @returns {boolean} True if the release date is today or in the future.
+ */
+export function isReleaseDateInFuture(releaseDate) {
+  if (!releaseDate) return false;
+  const release = new Date(releaseDate);
+  if (isNaN(release.getTime())) return false;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  release.setHours(0, 0, 0, 0);
+  return release > today;
+}
+
+/**
+ * Formats a release date for display in a badge.
+ *
+ * @param {string|Date} releaseDate - The release date to format.
+ * @returns {string} Formatted date string (e.g., "Dec 25, 2025").
+ */
+export function formatReleaseDateForBadge(releaseDate) {
+  if (!releaseDate) return "";
+  const date = new Date(releaseDate);
+  if (isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+/**
+ * Creates and appends a release date badge element for unreleased books.
+ *
+ * @param {HTMLElement} parentElement - The container to append the badge to.
+ * @param {string|Date} releaseDate - The release date of the book.
+ * @returns {HTMLDivElement|null} The created badge element, or null if not applicable.
+ */
+export function addReleaseDateBadge(parentElement, releaseDate) {
+  if (!isReleaseDateInFuture(releaseDate)) return null;
+
+  const formattedDate = formatReleaseDateForBadge(releaseDate);
+  return addDivElement(
+    { className: "release-date-badge", textContent: formattedDate },
+    parentElement
+  );
+}
+
+/**
+ * Creates and appends an "Upcoming" indicator badge for series with unreleased books.
+ *
+ * @param {HTMLElement} parentElement - The container to append the badge to.
+ * @returns {HTMLDivElement} The created upcoming badge element.
+ */
+export function addUpcomingBadge(parentElement) {
+  return addDivElement({ className: "upcoming-badge", textContent: "Upcoming" }, parentElement);
+}

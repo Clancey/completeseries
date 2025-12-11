@@ -6,6 +6,7 @@ import {
   addSeriesTitle,
   addEyeBadge,
   addSeriesGridContainer,
+  addReleaseDateBadge,
 } from "./tileElementFactory.js";
 import { addTextElement, emptyDivContent } from "./elementFactory.js";
 import { getPositionBySeriesName } from "./metadataUtils.js";
@@ -53,6 +54,7 @@ function renderBookTile(bookData, container, seriesTitle) {
   const positionInSeries = getPositionBySeriesName(bookData.series, seriesTitle);
 
   addSeriesBadge(tileInner, positionInSeries);
+  addReleaseDateBadge(tileInner, bookData.releaseDate);
   addSeriesImage(tileInner, bookData, bookTitle);
   addSeriesTitle(tileInner, bookTitle);
 
