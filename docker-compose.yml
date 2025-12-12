@@ -15,6 +15,7 @@ services:
       - ABS_API_KEY=${ABS_API_KEY:-}
       - ABS_USE_API_KEY=${ABS_USE_API_KEY:-false}
       - AUDIBLE_REGION=${AUDIBLE_REGION:-us}
+      - SEARCH_URL=${SEARCH_URL:-}
 
 volumes:
   completeseries_data:

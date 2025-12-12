@@ -16,6 +16,7 @@ let serverConfigCache = {
   lastRefresh: null,
   refreshStatus: "idle",
   audibleRegion: "us",
+  searchUrl: "",
 };
 
 /**
@@ -33,7 +34,7 @@ export async function checkServerStatus(forceRefresh = false) {
   try {
     const response = await fetch("php/getConfig.php");
     if (!response.ok) {
-      serverConfigCache = { checked: true, configured: false, serverUrl: null, authMethod: null, lastRefresh: null, refreshStatus: "idle", audibleRegion: "us" };
+      serverConfigCache = { checked: true, configured: false, serverUrl: null, authMethod: null, lastRefresh: null, refreshStatus: "idle", audibleRegion: "us", searchUrl: "" };
       return serverConfigCache;
     }
 
@@ -46,11 +47,12 @@ export async function checkServerStatus(forceRefresh = false) {
       lastRefresh: data.lastRefresh ?? null,
       refreshStatus: data.refreshStatus ?? "idle",
       audibleRegion: data.audibleRegion ?? "us",
+      searchUrl: data.searchUrl ?? "",
     };
     return serverConfigCache;
   } catch (error) {
     console.warn("Failed to check server config:", error.message);
-    serverConfigCache = { checked: true, configured: false, serverUrl: null, authMethod: null, lastRefresh: null, refreshStatus: "idle", audibleRegion: "us" };
+    serverConfigCache = { checked: true, configured: false, serverUrl: null, authMethod: null, lastRefresh: null, refreshStatus: "idle", audibleRegion: "us", searchUrl: "" };
     return serverConfigCache;
   }
 }
@@ -73,6 +75,16 @@ export function isServerConfigured() {
  */
 export function getServerAudibleRegion() {
   return serverConfigCache.audibleRegion;
+}
+
+/**
+ * Returns the configured search URL template (uses cached status).
+ * Call checkServerStatus() first to populate cache.
+ *
+ * @returns {string} The search URL template, or empty string if not configured.
+ */
+export function getSearchUrl() {
+  return serverConfigCache.searchUrl;
 }
 
 /**

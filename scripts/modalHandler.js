@@ -1,6 +1,7 @@
 import { emptyDivContent } from "./elementFactory.js";
 import { appendImageSizeVariation } from "./tileElementFactory.js";
 import { extractFormattedBookInfo, calculateModalTransform } from "./modalUtils.js";
+import { getSearchUrl } from "./serverSync.js";
 /**
  * Returns the current transform string used to animate the book modal
  * from its origin (usually a clicked tile) to the center of the screen.
@@ -10,6 +11,20 @@ import { extractFormattedBookInfo, calculateModalTransform } from "./modalUtils.
 export let bookDetailModalAnchor = null;
 
 /**
+ * Builds a search URL by appending title and author to the base URL.
+ *
+ * @param {string} baseUrl - The base search URL template.
+ * @param {string} title - The book title.
+ * @param {string} author - The book author(s).
+ * @returns {string} - The complete search URL.
+ */
+function buildSearchUrl(baseUrl, title, author) {
+  const searchQuery = `${title} ${author}`.trim().toLowerCase().replace(/\s+/g, "+");
+  // Append the query to the base URL
+  return `${baseUrl}${searchQuery}`;
+}
+
+/**
  * Builds the full HTML markup for the book detail modal.
  *
  * @param {Object} bookData - Original book metadata.
@@ -17,9 +32,15 @@ export let bookDetailModalAnchor = null;
  * @returns {string} - Complete innerHTML for the modal content.
  */
 function buildModalContent(bookData, info) {
+  const searchUrl = getSearchUrl();
+  const searchButtonHtml = searchUrl
+    ? `<a class="accent-button search-button" href="#" data-search-title="${encodeURIComponent(bookData.title || "")}" data-search-author="${encodeURIComponent(Array.isArray(bookData.authors) ? bookData.authors[0]?.name || "" : "")}">Search</a>`
+    : "";
+
   return `
     <div class="book-modal-header">
       <a class="accent-button" href="${bookData.link}" target="_blank" rel="noopener">View on Audible</a>
+      ${searchButtonHtml}
     </div>
     <div class="book-modal-main">
       <div class="book-modal-image">
@@ -66,6 +87,20 @@ export function openBookModal(bookData, sourceTile) {
 
   const formatted = extractFormattedBookInfo(bookData);
   modalContentElement.innerHTML = buildModalContent(bookData, formatted);
+
+  // Attach search button click handler if present
+  const searchButton = modalContentElement.querySelector(".search-button");
+  if (searchButton) {
+    searchButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const searchUrl = getSearchUrl();
+      const title = decodeURIComponent(searchButton.dataset.searchTitle || "");
+      const author = decodeURIComponent(searchButton.dataset.searchAuthor || "");
+      const fullUrl = buildSearchUrl(searchUrl, title, author);
+      window.open(fullUrl, "_blank", "noopener");
+    });
+  }
 
   const { transform, anchor } = calculateModalTransform(sourceTile, modalElement);
   modalElement.style.transition = "none";

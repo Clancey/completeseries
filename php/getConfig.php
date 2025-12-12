@@ -43,6 +43,9 @@ if (file_exists($dataFilePath)) {
 // Get Audible region (defaults to "us")
 $audibleRegion = getenv("AUDIBLE_REGION") ?: "us";
 
+// Get custom search URL (optional - for external search integration)
+$searchUrl = getenv("SEARCH_URL") ?: "";
+
 // Return config status (without exposing credentials)
 echo json_encode([
     "status" => "success",
@@ -52,5 +55,6 @@ echo json_encode([
     "hasCredentials" => $hasCredentials,
     "lastRefresh" => $lastRefresh,
     "refreshStatus" => $refreshStatus,
-    "audibleRegion" => $audibleRegion
+    "audibleRegion" => $audibleRegion,
+    "searchUrl" => $searchUrl
 ]);
