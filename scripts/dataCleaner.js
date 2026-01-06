@@ -297,8 +297,8 @@ function gateCheck(optionEnabled, condition, debugFn, payloadBuilder) {
  * @returns {any}
  */
 function gateNotViable(context) {
-  const { book, seriesContext } = context;
-  const isViable = isBookViable(book);
+  const { book, seriesContext, formData, releaseDate } = context;
+  const isViable = isBookViable(book, formData, releaseDate);
   if (!isViable) {
     debugLogBookViability({ book, seriesContext });
     return true;
@@ -1003,10 +1003,20 @@ function doesBookExistInArray(missingBooks, bookAsin) {
  * @param {any} bookMetadata
  * @returns {any}
  */
-function isBookViable(bookMetadata) {
-  const formData = getFormData();
+function isBookViable(bookMetadata, formData, releaseDate) {
+  const resolvedFormData = formData || getFormData();
+  const regionMatches = bookMetadata.region === resolvedFormData.region;
+  if (!regionMatches) return false;
 
-  return bookMetadata.isAvailable !== false && bookMetadata.region === formData.region;
+  const isAvailable = bookMetadata.isAvailable !== false;
+  if (isAvailable) return true;
+
+  // Allow upcoming releases unless the user chose to ignore future-dated books.
+  if (releaseDate && isReleaseInFuture(releaseDate)) {
+    return !resolvedFormData.ignoreFutureDateBooks;
+  }
+
+  return false;
 }
 
 /**
