@@ -1,5 +1,5 @@
 // metadataCollector.js
-import { fetchAudibleMetadata, findFromStorage } from "./dataFetcher.js";
+import { fetchAudibleMetadata, fetchAudibleSeriesDirect, findFromStorage } from "./dataFetcher.js";
 import { setMessage, setRateMessage } from "./uiFeedback.js";
 import { storeMetadataToLocalStorage } from "./localStorage.js";
 
@@ -14,9 +14,10 @@ let processStartTime; // Tracks when the batch process started
  * @param {Array<Object>} existingSeries - List of books with { asin, series, title }
  * @param {string} audibleRegion - Audible region code (e.g., 'uk', 'us')
  * @param {boolean} includeSubSeries - Whether to include subseries or not
+ * @param {boolean} [cacheOnly=false] - When true, only use cached data, skip API calls
  * @returns {Promise<Array<string>>} List of unique series ASINs
  */
-export async function collectBookMetadata(existingSeries, audibleRegion, includeSubSeries) {
+export async function collectBookMetadata(existingSeries, audibleRegion, includeSubSeries, cacheOnly = false) {
   const seriesAsins = [];
   const totalSeries = existingSeries.length;
   let processedCount = 0;
@@ -38,6 +39,12 @@ export async function collectBookMetadata(existingSeries, audibleRegion, include
       setMessage(`Fetching series unique ID: ${processedCount + 1} / ${totalSeries}`);
 
       if (!metadata) {
+        // In cache-only mode, skip API calls - just continue without this book's metadata
+        if (cacheOnly) {
+          processedCount++;
+          continue;
+        }
+
         // If metadata is not found in local storage, fetch it from the API
         const { audiMetaResponse, responseHeaders = {} } =
           (await fetchAudibleMetadata(bookASIN, audibleRegion, "book")) ?? {};
@@ -86,9 +93,11 @@ export async function collectBookMetadata(existingSeries, audibleRegion, include
  *
  * @param {Array<string>} seriesAsins - Audible series ASINs to fetch
  * @param {string} audibleRegion - Audible region code (e.g., 'uk')
+ * @param {Object} existingContent - User's existing library content
+ * @param {boolean} [cacheOnly=false] - When true, only use cached data, skip API calls
  * @returns {Promise<Array<Object>>} Array of { seriesAsin, response } entries
  */
-export async function collectSeriesMetadata(seriesAsins, audibleRegion, existingContent) {
+export async function collectSeriesMetadata(seriesAsins, audibleRegion, existingContent, cacheOnly = false) {
   const seriesMetadataResults = [];
   const totalSeries = seriesAsins.length;
   let processedCount = 0;
@@ -102,6 +111,12 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
       setMessage(`Fetching series metadata: ${processedCount + 1} / ${totalSeries}`);
 
       if (!seriesMetadata) {
+        // In cache-only mode, skip API calls - just continue without this series' metadata
+        if (cacheOnly) {
+          processedCount++;
+          continue;
+        }
+
         // If metadata is not found in local storage, fetch it from the API
         const { audiMetaResponse, responseHeaders = {} } =
           (await fetchAudibleMetadata(seriesAsin, audibleRegion, "series")) ?? {};
@@ -124,9 +139,55 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
 
         if (!existingContent) continue;
 
+        // Fix books with empty series array (audimeta data bug)
+        // Since we fetched from the series endpoint, we know these books belong to this series
+        // First, find the series name from a book that has it
+        const seriesName = audiMetaResponse.find((b) => b.series?.length > 0)?.series?.[0]?.name || "";
+
+        const fixedResponse = audiMetaResponse.map((book) => {
+          if (!book.series || book.series.length === 0) {
+            return {
+              ...book,
+              series: [{ asin: seriesAsin, name: seriesName, position: extractBookNumber(book.title) }],
+            };
+          }
+          return book;
+        });
+
+        // Only check Audible directly if audimeta data might be incomplete
+        // (e.g., if any book had an empty series array, indicating recent/incomplete data)
+        let combinedResponse = fixedResponse;
+        const hadEmptySeriesBooks = audiMetaResponse.some((b) => !b.series || b.series.length === 0);
+
+        if (hadEmptySeriesBooks) {
+          try {
+            const audibleDirect = await fetchAudibleSeriesDirect(seriesAsin, audibleRegion);
+            if (audibleDirect?.status === "success" && Array.isArray(audibleDirect.books)) {
+              const audiMetaAsins = new Set(fixedResponse.map((b) => b.asin));
+              const newBooks = audibleDirect.books.filter((b) => b.asin && !audiMetaAsins.has(b.asin));
+
+              if (newBooks.length > 0) {
+                // Convert Audible direct format to audimeta format and append
+                const convertedBooks = newBooks.map((b) => ({
+                  asin: b.asin,
+                  title: b.title,
+                  releaseDate: b.releaseDate || null,
+                  source: "audible_direct",
+                  series: [{ asin: seriesAsin, name: audibleDirect.seriesName || seriesName || "", position: extractBookNumber(b.title) }],
+                }));
+                combinedResponse = [...fixedResponse, ...convertedBooks];
+                console.log(`Added ${newBooks.length} book(s) from Audible direct for series ${seriesAsin}`);
+              }
+            }
+          } catch (audibleError) {
+            // Non-fatal: audible direct fallback failed, continue with audimeta data
+            console.warn(`Audible direct fallback failed for series ${seriesAsin}:`, audibleError.message);
+          }
+        }
+
         seriesMetadata = {
           seriesAsin,
-          response: audiMetaResponse,
+          response: combinedResponse,
         };
 
         storeMetadataToLocalStorage(seriesMetadata, "existingBookMetadata");
@@ -213,4 +274,17 @@ async function calculateRateLimitDelay(elapsed, remainingRequestsEstimate, rateL
  */
 function delay(delayInMilliseconds) {
   return new Promise((resolve) => setTimeout(resolve, delayInMilliseconds));
+}
+
+/**
+ * Extracts the book number from a title string.
+ * E.g., "The Primal Hunter 13" -> "13"
+ *
+ * @param {string} title - Book title
+ * @returns {string} Book number or empty string if not found
+ */
+function extractBookNumber(title) {
+  if (!title) return "";
+  const match = title.match(/(\d+)/);
+  return match ? match[1] : "";
 }

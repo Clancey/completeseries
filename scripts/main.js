@@ -34,6 +34,7 @@ import {
   endRun,
   computeStoragePresence,
   ensureWorkingMemoryReady,
+  clearLocalStorageByIdentifier,
 } from "./localStorage.js";
 import { checkServerStatus, triggerServerRefresh, isServerConfigured, getServerLibraryData, getServerAudibleRegion } from "./serverSync.js";
 import { syncHiddenItemsWithServer } from "./visibility.js";
@@ -198,12 +199,13 @@ export function resetUserInterfaceAndStartLoadingProcess() {
  * @param {Object} existingContent - Previously fetched library content
  * @param {Object} formData - Form configuration from user
  * @param {boolean} [refreshFilter=false] - Whether triggered by UI filter refresh
+ * @param {boolean} [cacheOnly=false] - When true, only use cached data, no API calls
  */
-export async function fetchAndDisplayResults(existingContent, formData, refreshFilter = false) {
+export async function fetchAndDisplayResults(existingContent, formData, refreshFilter = false, cacheOnly = false) {
   if (refreshFilter) setMessage("Refreshing filter results...");
 
   // Fetch book + series metadata
-  const seriesMetadata = await fetchAllMetadataForBooks(existingContent, formData);
+  const seriesMetadata = await fetchAllMetadataForBooks(existingContent, formData, cacheOnly);
 
   // Clean and group missing books by series
   groupedMissingBooks = await groupMissingBooks(existingContent, seriesMetadata, formData);
@@ -256,18 +258,20 @@ function populateLibraryCheckboxes(librariesList, parentContainer) {
  *
  * @param {Object} existingContent - Original fetched content
  * @param {Object} formData - Form configuration
+ * @param {boolean} [cacheOnly=false] - When true, only use cached data, no API calls
  * @returns {Promise<Array>} - Full metadata per series
  */
-async function fetchAllMetadataForBooks(existingContent, formData) {
+async function fetchAllMetadataForBooks(existingContent, formData, cacheOnly = false) {
   // Extract all series ASINs by examining first-book metadata
   const seriesASINs = await collectBookMetadata(
     existingContent.seriesFirstASIN,
     formData.region,
-    formData.includeSubSeries
+    formData.includeSubSeries,
+    cacheOnly
   );
 
   // Use those ASINs to get full series details
-  return await collectSeriesMetadata(seriesASINs, formData.region, existingContent);
+  return await collectSeriesMetadata(seriesASINs, formData.region, existingContent, cacheOnly);
 }
 
 /**
@@ -610,7 +614,8 @@ async function refreshAndUseServerData() {
       // Now get the fresh data and use it
       const serverData = await getServerLibraryData();
       if (serverData.hasData) {
-        processServerData(serverData);
+        // Pass cacheOnly=false to fetch fresh metadata from APIs
+        processServerData(serverData, false);
         return;
       }
     }
@@ -628,18 +633,23 @@ async function refreshAndUseServerData() {
 }
 
 /**
- * Processes server-cached data directly without manual login.
- * Uses the same flow as manual login but with server data.
- *
- * @param {Object} serverData - Server data containing seriesFirstASIN, seriesAllASIN
+ * Processes server data and displays results.
+ * @param {Object} serverData - Server library data
+ * @param {boolean} [cacheOnly=true] - When true, only use cached metadata (no API calls)
  */
-async function processServerData(serverData) {
+async function processServerData(serverData, cacheOnly = true) {
   // Hide the server option UI
   const serverOptionDiv = document.getElementById("serverDataOption");
   if (serverOptionDiv) serverOptionDiv.style.display = "none";
 
   resetUserInterfaceAndStartLoadingProcess();
   await beginRun({ fresh: "auto" });
+
+  // When refreshing (not cache-only), clear the metadata cache to force fresh API calls
+  if (!cacheOnly) {
+    await clearLocalStorageByIdentifier("existingBookMetadata");
+    await clearLocalStorageByIdentifier("existingFirstBookASINs");
+  }
 
   try {
     setMessage("Using server-cached library data...");
@@ -669,8 +679,8 @@ async function processServerData(serverData) {
     // Get form data for filter settings
     const formData = getFormData();
 
-    // Process the data
-    await fetchAndDisplayResults(existingContent, formData);
+    // Process the data - pass cacheOnly to control API calls
+    await fetchAndDisplayResults(existingContent, formData, false, cacheOnly);
   } catch (error) {
     console.error("Error processing server data:", error);
     setMessage(`Error: ${error.message}`);

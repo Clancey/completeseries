@@ -240,6 +240,46 @@ export async function fetchAudibleMetadata(itemASIN, region, itemType) {
 }
 
 /**
+ * Fetches series book data directly from Audible via PHP proxy.
+ * Use this as a fallback when audimeta.de doesn't have complete data.
+ *
+ * @param {string} seriesAsin - The Audible series ASIN
+ * @param {string} region - Audible region code (e.g., "us", "uk")
+ * @returns {Promise<Object>} - Series data with books array
+ * @throws {Error} - If the request fails
+ */
+export async function fetchAudibleSeriesDirect(seriesAsin, region) {
+  try {
+    const response = await fetch("php/audibleSeriesFetcher.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        asin: seriesAsin,
+        region: region,
+      }),
+    });
+
+    if (!response.ok) {
+      const text = await response.text().catch(() => "");
+      throw new Error(`Audible fetch failed (${response.status}): ${text}`);
+    }
+
+    const data = await response.json();
+
+    if (data.status !== "success") {
+      throw new Error(data.message || "Failed to fetch from Audible");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error(`Failed to fetch series ${seriesAsin} from Audible: ${error.message}`);
+  }
+}
+
+/**
  * Searches localStorage for a specific item in a stored array by matching a key-value pair.
  *
  * @param {string} key - The object key to match (e.g., 'asin').
