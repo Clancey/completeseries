@@ -832,7 +832,9 @@ function hasDecimalSeriesPosition(seriesArray) {
  * @returns {any}
  */
 function isReleaseInFuture(releaseDateString) {
+  if (!releaseDateString) return false;
   const releaseDate = new Date(releaseDateString);
+  if (isNaN(releaseDate.getTime())) return false;
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   releaseDate.setHours(0, 0, 0, 0);

@@ -176,7 +176,7 @@ export function isReleaseDateInFuture(releaseDate) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   release.setHours(0, 0, 0, 0);
-  return release > today;
+  return release >= today;
 }
 
 /**
