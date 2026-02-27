@@ -719,6 +719,34 @@ export function loadMetadataFromLocalStorage(storeIdentifier) {
  * @param {string} storeIdentifier One of REQUIRED_KEYS.
  * @returns {Promise<void>}
  */
+/**
+ * Remove a single item from the working cache by key match.
+ *
+ * Finds the first object in the collection where `object[key] === value`
+ * and removes it. Marks the key as modified so the change is persisted.
+ *
+ * @param {string} key             - Property name to match on (e.g., "seriesAsin").
+ * @param {string} value           - Value to match against.
+ * @param {string} storeIdentifier - One of REQUIRED_KEYS.
+ */
+export function removeFromStorage(key, value, storeIdentifier) {
+  if (!REQUIRED_KEYS.includes(storeIdentifier)) return;
+
+  const targetArray = workingCache[storeIdentifier];
+  if (!Array.isArray(targetArray)) return;
+
+  const index = targetArray.findIndex(
+    (item) => item && typeof item === "object" && item[key] === value
+  );
+
+  if (index !== -1) {
+    targetArray.splice(index, 1);
+    if (runIsActive) {
+      modifiedKeys.add(storeIdentifier);
+    }
+  }
+}
+
 export async function storeMetadataToLocalStorage(metadata, storeIdentifier) {
   // Ignore unknown keys to prevent accidental buckets.
   if (!REQUIRED_KEYS.includes(storeIdentifier)) return;

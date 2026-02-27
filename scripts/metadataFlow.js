@@ -1,7 +1,7 @@
 // metadataCollector.js
 import { fetchAudibleMetadata, fetchAudibleSeriesDirect, findFromStorage } from "./dataFetcher.js";
 import { setMessage, setRateMessage } from "./uiFeedback.js";
-import { storeMetadataToLocalStorage } from "./localStorage.js";
+import { storeMetadataToLocalStorage, removeFromStorage } from "./localStorage.js";
 
 // Rate limit configuration
 const rateLimitResetTime = 60000; // Time in milliseconds before rate limit resets
@@ -107,6 +107,13 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
   for (const seriesAsin of seriesAsins) {
     try {
       let seriesMetadata = findFromStorage("seriesAsin", seriesAsin, "existingBookMetadata");
+
+      // Invalidate cached entries that contain future-dated books,
+      // since upcoming release dates change frequently.
+      if (seriesMetadata && hasFutureReleaseDates(seriesMetadata)) {
+        removeFromStorage("seriesAsin", seriesAsin, "existingBookMetadata");
+        seriesMetadata = null;
+      }
 
       setMessage(`Fetching series metadata: ${processedCount + 1} / ${totalSeries}`);
 
@@ -283,6 +290,25 @@ function delay(delayInMilliseconds) {
  * @param {string} title - Book title
  * @returns {string} Book number or empty string if not found
  */
+/**
+ * Check if a cached series metadata entry contains any books with future release dates.
+ * If so, the cache is likely stale since upcoming dates change frequently.
+ *
+ * @param {Object} seriesMetadata - Cached entry with { seriesAsin, response: book[] }
+ * @returns {boolean} True if any book has a releaseDate in the future.
+ */
+function hasFutureReleaseDates(seriesMetadata) {
+  const books = seriesMetadata?.response;
+  if (!Array.isArray(books)) return false;
+
+  const now = new Date();
+  return books.some((book) => {
+    if (!book.releaseDate) return false;
+    const release = new Date(book.releaseDate);
+    return !isNaN(release.getTime()) && release > now;
+  });
+}
+
 function extractBookNumber(title) {
   if (!title) return "";
   const match = title.match(/(\d+)/);
