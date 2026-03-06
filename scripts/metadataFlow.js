@@ -110,7 +110,7 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
 
       // Invalidate cached entries that contain future-dated books,
       // since upcoming release dates change frequently.
-      if (seriesMetadata && hasFutureReleaseDates(seriesMetadata)) {
+      if (seriesMetadata && hasUnreleasedBooks(seriesMetadata)) {
         removeFromStorage("seriesAsin", seriesAsin, "existingBookMetadata");
         seriesMetadata = null;
       }
@@ -291,18 +291,25 @@ function delay(delayInMilliseconds) {
  * @returns {string} Book number or empty string if not found
  */
 /**
- * Check if a cached series metadata entry contains any books with future release dates.
- * If so, the cache is likely stale since upcoming dates change frequently.
+ * Check if a cached series metadata entry may contain stale release data.
+ * Returns true when any book is either:
+ *  - Upcoming (releaseDate in the future) — dates change frequently, or
+ *  - Unavailable (isAvailable === false) — the book hasn't been released yet,
+ *    so its cached date (even if now past) may have been pushed back.
  *
  * @param {Object} seriesMetadata - Cached entry with { seriesAsin, response: book[] }
- * @returns {boolean} True if any book has a releaseDate in the future.
+ * @returns {boolean} True if the cache should be refreshed.
  */
-function hasFutureReleaseDates(seriesMetadata) {
+function hasUnreleasedBooks(seriesMetadata) {
   const books = seriesMetadata?.response;
   if (!Array.isArray(books)) return false;
 
   const now = new Date();
   return books.some((book) => {
+    // Book explicitly marked as unavailable — likely unreleased
+    if (book.isAvailable === false) return true;
+
+    // Book with a future release date
     if (!book.releaseDate) return false;
     const release = new Date(book.releaseDate);
     return !isNaN(release.getTime()) && release > now;
