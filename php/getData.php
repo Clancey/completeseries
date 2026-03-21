@@ -41,6 +41,7 @@ $defaultData = [
     "hiddenItems" => [],
     "existingFirstBookASINs" => [],
     "existingBookMetadata" => [],
+    "audibleFirstBookASINs" => [],
     "serverConfig" => [
         "lastRefresh" => null,
         "refreshStatus" => "idle"

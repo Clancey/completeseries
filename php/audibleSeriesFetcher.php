@@ -305,13 +305,19 @@ function convertProductToBook($product, $region, $webDomain, $seriesAsin = "", $
         ];
     }
 
-    // Release date
+    // Release date — normalize far-future placeholders (e.g. 2199) from Audible
     $releaseDate = $product["release_date"] ?? $product["issue_date"] ?? null;
     $isAvailable = true;
     if ($releaseDate) {
         $ts = strtotime($releaseDate);
-        if ($ts !== false && $ts > time()) {
-            $isAvailable = false;
+        if ($ts !== false) {
+            $year = (int) date("Y", $ts);
+            if ($year >= 2100) {
+                // Audible placeholder date — mark unavailable but keep date for display as "TBD"
+                $isAvailable = false;
+            } elseif ($ts > time()) {
+                $isAvailable = false;
+            }
         }
     }
 

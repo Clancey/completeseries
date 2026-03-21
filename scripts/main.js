@@ -35,8 +35,10 @@ import {
   computeStoragePresence,
   ensureWorkingMemoryReady,
   clearLocalStorageByIdentifier,
+  storeUpdateFullValueForLocalStorage,
+  loadMetadataFromLocalStorage,
 } from "./localStorage.js";
-import { checkServerStatus, triggerServerRefresh, getServerLibraryData, getServerAudibleRegion } from "./serverSync.js";
+import { checkServerStatus, triggerServerRefresh, getServerLibraryData, getServerAudibleRegion, fetchServerData, saveServerData } from "./serverSync.js";
 import { syncHiddenItemsWithServer } from "./visibility.js";
 
 // Stores current data fetched from AudiobookShelf
@@ -303,9 +305,33 @@ async function uiUpdateAndDrawResults(groupedMissingBooks) {
   enableExportButtons();
   // After run completes (and logs have been written), re-render:
   populateDebugViewerIfResultsExist();
+
+  // Save Audible metadata to server before endRun clears heavy keys from memory
+  saveAudibleCacheToServer();
+
   await endRun({
     persist: true, // flush dirty keys to DB
     clearHeavy: true, // clear only heavy arrays in memory; keeps "hiddenItems"
+  });
+}
+
+/**
+ * Persist Audible metadata cache to the server (fire-and-forget).
+ * Saves both series metadata and first-book metadata so "Use Cached Data"
+ * can work without making Audible API calls on the next visit.
+ */
+function saveAudibleCacheToServer() {
+  const bookMetadata = loadMetadataFromLocalStorage("existingBookMetadata");
+  const firstBookASINs = loadMetadataFromLocalStorage("existingFirstBookASINs");
+
+  if (!bookMetadata?.length && !firstBookASINs?.length) return;
+
+  const payload = {};
+  if (bookMetadata?.length) payload.existingBookMetadata = bookMetadata;
+  if (firstBookASINs?.length) payload.audibleFirstBookASINs = firstBookASINs;
+
+  saveServerData(payload).catch((err) => {
+    console.warn("Failed to save Audible cache to server:", err.message);
   });
 }
 
@@ -666,6 +692,34 @@ async function processServerData(serverData, cacheOnly = true) {
       toggleElementVisibility("form-container", true);
       if (serverOptionDiv) serverOptionDiv.style.display = "block";
       return;
+    }
+
+    // When using cached data, load Audible metadata from server into working cache
+    // so findFromStorage() can locate entries during cacheOnly mode
+    if (cacheOnly) {
+      const fullServerData = await fetchServerData();
+      let hasAudibleCache = false;
+
+      if (fullServerData) {
+        // Load Audible series metadata (existingBookMetadata) into working cache
+        if (Array.isArray(fullServerData.existingBookMetadata) && fullServerData.existingBookMetadata.length > 0) {
+          await storeUpdateFullValueForLocalStorage(fullServerData.existingBookMetadata, "existingBookMetadata");
+          hasAudibleCache = true;
+        }
+
+        // Load Audible book metadata (audibleFirstBookASINs) into working cache
+        // This is stored separately from the ABS library data (existingFirstBookASINs)
+        if (Array.isArray(fullServerData.audibleFirstBookASINs) && fullServerData.audibleFirstBookASINs.length > 0) {
+          await storeUpdateFullValueForLocalStorage(fullServerData.audibleFirstBookASINs, "existingFirstBookASINs");
+          hasAudibleCache = true;
+        }
+      }
+
+      // If server has no Audible metadata cache, fall back to making API calls
+      if (!hasAudibleCache) {
+        console.info("No Audible metadata cache on server, falling back to API calls");
+        cacheOnly = false;
+      }
     }
 
     // Set the form's region dropdown to match server config

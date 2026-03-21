@@ -133,14 +133,25 @@ function findFirstVisibleBook(books, seriesTitle) {
  */
 function findEarliestUpcomingRelease(books) {
   let earliestDate = null;
+  let hasPlaceholderDate = false;
 
   for (const book of books) {
     if (isReleaseDateInFuture(book.releaseDate)) {
       const releaseDate = new Date(book.releaseDate);
+      // Skip far-future placeholder dates (e.g. 2199) when finding earliest real date
+      if (releaseDate.getFullYear() >= 2100) {
+        hasPlaceholderDate = true;
+        continue;
+      }
       if (!earliestDate || releaseDate < earliestDate) {
         earliestDate = releaseDate;
       }
     }
+  }
+
+  // If only placeholder dates exist, return a sentinel so the badge shows "TBD"
+  if (!earliestDate && hasPlaceholderDate) {
+    return new Date("2199-01-01");
   }
 
   return earliestDate;

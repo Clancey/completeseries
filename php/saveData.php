@@ -45,7 +45,7 @@ if (!is_array($input)) {
 }
 
 // Validate allowed keys
-$allowedKeys = ["hiddenItems", "existingFirstBookASINs", "existingBookMetadata"];
+$allowedKeys = ["hiddenItems", "existingFirstBookASINs", "existingBookMetadata", "audibleFirstBookASINs"];
 $hasValidKey = false;
 foreach ($allowedKeys as $key) {
     if (array_key_exists($key, $input)) {

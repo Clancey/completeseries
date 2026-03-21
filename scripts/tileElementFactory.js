@@ -189,6 +189,8 @@ export function formatReleaseDateForBadge(releaseDate) {
   if (!releaseDate) return "";
   const date = new Date(releaseDate);
   if (isNaN(date.getTime())) return "";
+  // Audible uses far-future placeholder dates (e.g. 2199) for unannounced releases
+  if (date.getFullYear() >= 2100) return "TBD";
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 

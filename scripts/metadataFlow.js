@@ -114,7 +114,9 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
 
       // Invalidate cached entries that contain future-dated or unavailable books,
       // since upcoming release dates change frequently.
-      if (seriesMetadata && hasUnreleasedBooks(seriesMetadata)) {
+      // Skip invalidation in cacheOnly mode — stale data is better than no data
+      // when we can't re-fetch from the API.
+      if (!cacheOnly && seriesMetadata && hasUnreleasedBooks(seriesMetadata)) {
         removeFromStorage("seriesAsin", seriesAsin, "existingBookMetadata");
         seriesMetadata = null;
       }

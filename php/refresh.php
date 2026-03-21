@@ -61,6 +61,7 @@ function loadExistingData($path) {
         "hiddenItems" => [],
         "existingFirstBookASINs" => [],
         "existingBookMetadata" => [],
+        "audibleFirstBookASINs" => [],
         "serverConfig" => ["lastRefresh" => null, "refreshStatus" => "idle"]
     ];
 
