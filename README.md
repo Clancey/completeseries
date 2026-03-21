@@ -26,7 +26,7 @@ You can inspect the full source code in this repository to verify that yourself.
 
 ## 🚀 Overview
 
-**Complete My Series** helps you find audiobooks missing from your library's series collections. It integrates with your AudiobookShelf server and uses data from [audimeta.de](https://audimeta.de) to determine which titles you're missing from each Audible series.
+**Complete My Series** helps you find audiobooks missing from your library's series collections. It integrates with your AudiobookShelf server and uses data from Audible to determine which titles you're missing from each Audible series.
 
 ---
 
@@ -61,8 +61,8 @@ You can inspect the full source code in this repository to verify that yourself.
    - If you have a single library this screen will not be shown and the default library will be used.
 
 4. **Discover missing books**
-   - The app fetches your library, finds the first book in each series, then uses that to get the full series metadata from `audimeta.de`.
-   - If the series metadata has already been fetched from `audimeta.de` internal storage is used to improve performance and reduce API requests.
+   - The app fetches your library, finds the first book in each series, then uses that to get the full series metadata from Audible.
+   - If the series metadata has already been fetched, internal storage is used to improve performance and reduce requests.
 
 5. **Review and buy**
    - Click a series tile to see all missing titles.

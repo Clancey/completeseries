@@ -1,5 +1,5 @@
-// metadataCollector.js
-import { fetchAudibleMetadata, fetchAudibleSeriesDirect, findFromStorage } from "./dataFetcher.js";
+// metadataFlow.js
+import { fetchAudibleMetadata, findFromStorage } from "./dataFetcher.js";
 import { setMessage, setRateMessage } from "./uiFeedback.js";
 import { storeMetadataToLocalStorage, removeFromStorage } from "./localStorage.js";
 
@@ -45,7 +45,7 @@ export async function collectBookMetadata(existingSeries, audibleRegion, include
           continue;
         }
 
-        // If metadata is not found in local storage, fetch it from the API
+        // If metadata is not found in local storage, fetch it from Audible
         const { audiMetaResponse, responseHeaders = {} } =
           (await fetchAudibleMetadata(bookASIN, audibleRegion, "book")) ?? {};
 
@@ -108,7 +108,7 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
     try {
       let seriesMetadata = findFromStorage("seriesAsin", seriesAsin, "existingBookMetadata");
 
-      // Invalidate cached entries that contain future-dated books,
+      // Invalidate cached entries that contain future-dated or unavailable books,
       // since upcoming release dates change frequently.
       if (seriesMetadata && hasUnreleasedBooks(seriesMetadata)) {
         removeFromStorage("seriesAsin", seriesAsin, "existingBookMetadata");
@@ -124,7 +124,7 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
           continue;
         }
 
-        // If metadata is not found in local storage, fetch it from the API
+        // Fetch series metadata from Audible via PHP proxy
         const { audiMetaResponse, responseHeaders = {} } =
           (await fetchAudibleMetadata(seriesAsin, audibleRegion, "series")) ?? {};
 
@@ -146,9 +146,8 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
 
         if (!existingContent) continue;
 
-        // Fix books with empty series array (audimeta data bug)
-        // Since we fetched from the series endpoint, we know these books belong to this series
-        // First, find the series name from a book that has it
+        // Safety net: fix books with empty series array.
+        // Since we fetched from the series endpoint, these books belong to this series.
         const seriesName = audiMetaResponse.find((b) => b.series?.length > 0)?.series?.[0]?.name || "";
 
         const fixedResponse = audiMetaResponse.map((book) => {
@@ -161,40 +160,9 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
           return book;
         });
 
-        // Only check Audible directly if audimeta data might be incomplete
-        // (e.g., if any book had an empty series array, indicating recent/incomplete data)
-        let combinedResponse = fixedResponse;
-        const hadEmptySeriesBooks = audiMetaResponse.some((b) => !b.series || b.series.length === 0);
-
-        if (hadEmptySeriesBooks) {
-          try {
-            const audibleDirect = await fetchAudibleSeriesDirect(seriesAsin, audibleRegion);
-            if (audibleDirect?.status === "success" && Array.isArray(audibleDirect.books)) {
-              const audiMetaAsins = new Set(fixedResponse.map((b) => b.asin));
-              const newBooks = audibleDirect.books.filter((b) => b.asin && !audiMetaAsins.has(b.asin));
-
-              if (newBooks.length > 0) {
-                // Convert Audible direct format to audimeta format and append
-                const convertedBooks = newBooks.map((b) => ({
-                  asin: b.asin,
-                  title: b.title,
-                  releaseDate: b.releaseDate || null,
-                  source: "audible_direct",
-                  series: [{ asin: seriesAsin, name: audibleDirect.seriesName || seriesName || "", position: extractBookNumber(b.title) }],
-                }));
-                combinedResponse = [...fixedResponse, ...convertedBooks];
-                console.log(`Added ${newBooks.length} book(s) from Audible direct for series ${seriesAsin}`);
-              }
-            }
-          } catch (audibleError) {
-            // Non-fatal: audible direct fallback failed, continue with audimeta data
-            console.warn(`Audible direct fallback failed for series ${seriesAsin}:`, audibleError.message);
-          }
-        }
-
         seriesMetadata = {
           seriesAsin,
-          response: combinedResponse,
+          response: fixedResponse,
         };
 
         storeMetadataToLocalStorage(seriesMetadata, "existingBookMetadata");
@@ -283,13 +251,6 @@ function delay(delayInMilliseconds) {
   return new Promise((resolve) => setTimeout(resolve, delayInMilliseconds));
 }
 
-/**
- * Extracts the book number from a title string.
- * E.g., "The Primal Hunter 13" -> "13"
- *
- * @param {string} title - Book title
- * @returns {string} Book number or empty string if not found
- */
 /**
  * Check if a cached series metadata entry may contain stale release data.
  * Returns true when any book is either:

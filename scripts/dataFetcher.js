@@ -218,64 +218,24 @@ export async function fetchAudiobookShelfLibraries(formData) {
 }
 
 /**
- * Retrieves metadata for a specific Audible item (book or series) directly from audimeta.de.
+ * Retrieves metadata for a specific Audible item (book or series)
+ * via PHP proxy that scrapes Audible directly.
  *
  * @param {string} itemASIN - The Audible ASIN identifier
  * @param {string} region - Audible region code (e.g., "uk", "us", "de")
  * @param {string} itemType - Either "book" or "series"
- * @returns {Promise<Object>} - Metadata response from audimeta.de
+ * @returns {Promise<Object>} - Metadata response from Audible
  * @throws {Error} - If the request fails or response is invalid
  */
 export async function fetchAudibleMetadata(itemASIN, region, itemType) {
   try {
     return await fetchAudimetaMetadata({
       asin: itemASIN,
-      // eslint-disable-next-line object-shorthand
-      region: region,
+      region,
       type: itemType,
     });
   } catch (error) {
     throw new Error(`Failed to fetch metadata for ASIN ${itemASIN}: ${error.message}`);
-  }
-}
-
-/**
- * Fetches series book data directly from Audible via PHP proxy.
- * Use this as a fallback when audimeta.de doesn't have complete data.
- *
- * @param {string} seriesAsin - The Audible series ASIN
- * @param {string} region - Audible region code (e.g., "us", "uk")
- * @returns {Promise<Object>} - Series data with books array
- * @throws {Error} - If the request fails
- */
-export async function fetchAudibleSeriesDirect(seriesAsin, region) {
-  try {
-    const response = await fetch("php/audibleSeriesFetcher.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        asin: seriesAsin,
-        region: region,
-      }),
-    });
-
-    if (!response.ok) {
-      const text = await response.text().catch(() => "");
-      throw new Error(`Audible fetch failed (${response.status}): ${text}`);
-    }
-
-    const data = await response.json();
-
-    if (data.status !== "success") {
-      throw new Error(data.message || "Failed to fetch from Audible");
-    }
-
-    return data;
-  } catch (error) {
-    throw new Error(`Failed to fetch series ${seriesAsin} from Audible: ${error.message}`);
   }
 }
 

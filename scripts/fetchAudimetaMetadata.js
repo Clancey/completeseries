@@ -1,9 +1,8 @@
 import { setRateMessage } from "./uiFeedback.js";
 
 /**
- * Fetches metadata from audimeta.de for a specific Audible book or series.
- * Includes response headers such as rate limits and cache status.
- * Automatically waits and retries on 429 rate limit errors.
+ * Fetches metadata from Audible via PHP proxy for a specific book or series.
+ * Routes requests to our server-side scrapers that parse Audible pages directly.
  *
  * @param {Object} params - Input parameters for the request.
  * @param {string} params.type - Either "book" or "series" (defaults to "book").
@@ -11,8 +10,8 @@ import { setRateMessage } from "./uiFeedback.js";
  * @param {string} params.region - Audible region code, e.g., "uk", "us", "de" (defaults to "uk").
  *
  * @returns {Promise<Object>} - An object containing:
- *   - audiMetaResponse: Parsed JSON data from audimeta.de.
- *   - responseHeaders: Metadata from the response headers including rate limits and cache status.
+ *   - audiMetaResponse: Parsed metadata from Audible.
+ *   - responseHeaders: Metadata including rate limits and cache status.
  *
  * @throws {Error} If required fields are missing or the fetch request fails.
  */
@@ -27,33 +26,36 @@ export async function fetchAudimetaMetadata(params) {
   const trimmedASIN = asin.trim();
   const regionCode = region.trim().toLowerCase();
 
-  // Build the API URL based on type
-  const apiUrl =
-    type === "book"
-      ? `https://audimeta.de/book/${trimmedASIN}?cache=true&region=${regionCode}`
-      : `https://audimeta.de/series/${trimmedASIN}/books?region=${regionCode}&cache=true`;
+  // Route to the appropriate PHP endpoint
+  const endpoint =
+    type === "book" ? "php/audibleBookFetcher.php" : "php/audibleSeriesFetcher.php";
 
   // Perform the fetch request with retry logic for rate limits
-  return await fetchWithRateLimitRetry(apiUrl);
+  return await fetchWithRateLimitRetry(endpoint, trimmedASIN, regionCode, type);
 }
 
 /**
- * Performs a fetch request with automatic retry on 429 rate limit errors.
+ * Performs a POST request to our PHP proxy with automatic retry on 429 rate limit errors.
  * Shows a countdown message to the user while waiting.
  *
- * @param {string} url - The URL to fetch
+ * @param {string} endpoint - The PHP endpoint URL
+ * @param {string} asin - The ASIN to look up
+ * @param {string} region - The Audible region code
+ * @param {string} type - "book" or "series"
  * @param {number} maxRetries - Maximum number of retries (default: 3)
  * @returns {Promise<Object>} - The response data and headers
  */
-async function fetchWithRateLimitRetry(url, maxRetries = 3) {
+async function fetchWithRateLimitRetry(endpoint, asin, region, type, maxRetries = 3) {
   let attempts = 0;
 
   while (attempts < maxRetries) {
-    const response = await fetch(url, {
-      method: "GET",
+    const response = await fetch(endpoint, {
+      method: "POST",
       headers: {
+        "Content-Type": "application/json",
         Accept: "application/json",
       },
+      body: JSON.stringify({ asin, region }),
     });
 
     // Handle rate limit (429) with wait and retry
@@ -90,16 +92,30 @@ async function fetchWithRateLimitRetry(url, maxRetries = 3) {
     // Handle other non-OK responses
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`audimeta.de request failed (${response.status}): ${errorText}`);
+      throw new Error(`Audible request failed (${response.status}): ${errorText}`);
     }
 
-    // Success - extract and return both data and headers
-    const audiMetaResponse = await response.json();
-    const responseHeaders = {
-      requestLimit: response.headers.get("x-ratelimit-limit"),
-      requestRemaining: response.headers.get("x-ratelimit-remaining"),
-      cached: response.headers.get("x-cached"),
-    };
+    // Success - parse the response
+    const data = await response.json();
+
+    // Check for application-level errors from our PHP endpoints
+    if (data.status === "error") {
+      throw new Error(data.message || "Audible fetch failed");
+    }
+
+    // Extract the response in the format the rest of the app expects
+    let audiMetaResponse;
+    let responseHeaders;
+
+    if (type === "book") {
+      // Book endpoint returns { audiMetaResponse: bookObj, responseHeaders: {...} }
+      audiMetaResponse = data.audiMetaResponse;
+      responseHeaders = data.responseHeaders || {};
+    } else {
+      // Series endpoint returns { audiMetaResponse: [...books], responseHeaders: {...}, ... }
+      audiMetaResponse = data.audiMetaResponse || data.books || [];
+      responseHeaders = data.responseHeaders || {};
+    }
 
     return { audiMetaResponse, responseHeaders };
   }
