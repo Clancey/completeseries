@@ -1010,6 +1010,12 @@ function isBookViable(bookMetadata, formData, releaseDate) {
   const regionMatches = bookMetadata.region === resolvedFormData.region;
   if (!regionMatches) return false;
 
+  // Audible uses far-future placeholder dates (e.g. 2199) for phantom/unannounced entries — skip entirely
+  if (releaseDate) {
+    const rd = new Date(releaseDate);
+    if (!isNaN(rd.getTime()) && rd.getFullYear() >= 2100) return false;
+  }
+
   const isAvailable = bookMetadata.isAvailable !== false;
   if (isAvailable) return true;
 
