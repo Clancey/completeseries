@@ -1,6 +1,10 @@
 <?php
 // existingSeriesFetcher.php
 
+// Prevent PHP warnings/deprecations from corrupting JSON output
+error_reporting(0);
+ini_set('display_errors', '0');
+
 // Set response type to JSON
 header("Content-Type: application/json");
 

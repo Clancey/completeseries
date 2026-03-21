@@ -188,6 +188,15 @@ export function findMissingBooks(existingContent, seriesMetadata, formData) {
     libraryTitlesBySeries.get(nSeries).add(nTitle);
   }
 
+  // Also build a global title set for cross-series matching
+  // Handles cases where Audible uses different series names (e.g. "vs." vs "versus",
+  // "Author's Preferred Order" vs "Publication Order")
+  const allLibraryTitles = new Set();
+  for (const item of existingContent) {
+    const nTitle = normaliseText(item.title);
+    if (nTitle) allLibraryTitles.add(nTitle);
+  }
+
   const missingBooks = [];
 
   // Ordered list of gates; behavior unchanged
@@ -226,6 +235,7 @@ export function findMissingBooks(existingContent, seriesMetadata, formData) {
         missingBooks,
         libraryASINs,
         libraryTitlesBySeries,
+        allLibraryTitles,
         formData,
       };
 
@@ -340,7 +350,7 @@ function gateNotViable(context) {
  * @returns {any}
  */
 function gateAlreadyInLibrary(context) {
-  const { asin, libraryASINs, book, seriesContext, title, bookSeriesArray, libraryTitlesBySeries } = context;
+  const { asin, libraryASINs, book, seriesContext, title, bookSeriesArray, libraryTitlesBySeries, allLibraryTitles } = context;
 
   // Match by ASIN (exact edition match)
   if (libraryASINs.has(asin)) {
@@ -349,14 +359,38 @@ function gateAlreadyInLibrary(context) {
   }
 
   // Match by normalised title within the same series (handles different editions/narrators)
+  // Uses contains matching to handle cases where Audible prefixes series names to titles
+  // e.g. Audible: "The Chronicles Of Narnia: The Magician's Nephew" vs library: "The Magician's Nephew"
   if (libraryTitlesBySeries && title) {
     const nTitle = normaliseText(title);
-    for (const seriesEntry of bookSeriesArray) {
-      const nSeries = normaliseText(seriesEntry?.name ?? "");
-      const titlesInSeries = libraryTitlesBySeries.get(nSeries);
-      if (titlesInSeries?.has(nTitle)) {
-        debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs, matchedBy: "title" });
-        return true;
+    if (nTitle.length >= 4) {
+      for (const seriesEntry of bookSeriesArray) {
+        const nSeries = normaliseText(seriesEntry?.name ?? "");
+        const titlesInSeries = libraryTitlesBySeries.get(nSeries);
+        if (!titlesInSeries) continue;
+        for (const libTitle of titlesInSeries) {
+          if (libTitle.length < 4) continue;
+          if (nTitle === libTitle || nTitle.includes(libTitle) || libTitle.includes(nTitle)) {
+            debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs, matchedBy: "title" });
+            return true;
+          }
+        }
+      }
+    }
+  }
+
+  // Fallback: match title globally across all library books (handles mismatched series names)
+  // e.g. "Alcatraz vs. the Evil Librarians" vs "Alcatraz versus the Evil Librarians"
+  // or books listed under different series orderings (Author's vs Publication order)
+  if (allLibraryTitles && title) {
+    const nTitle = normaliseText(title);
+    if (nTitle.length >= 4) {
+      for (const libTitle of allLibraryTitles) {
+        if (libTitle.length < 4) continue;
+        if (nTitle === libTitle || nTitle.includes(libTitle) || libTitle.includes(nTitle)) {
+          debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs, matchedBy: "title" });
+          return true;
+        }
       }
     }
   }

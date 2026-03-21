@@ -7,6 +7,10 @@
 // The caller (metadataFlow.js) provides a series ASIN. We first need to find
 // a book that belongs to that series, then use InTheSameSeries to get all books.
 
+// Prevent PHP warnings/deprecations from corrupting JSON output
+error_reporting(0);
+ini_set('display_errors', '0');
+
 header("Content-Type: application/json");
 
 // Rate limiting: simple file-based throttle

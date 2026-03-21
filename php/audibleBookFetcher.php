@@ -3,6 +3,10 @@
 // Fetches book metadata from Audible's catalog API.
 // Returns data in audimeta-compatible format for seamless integration.
 
+// Prevent PHP warnings/deprecations from corrupting JSON output
+error_reporting(0);
+ini_set('display_errors', '0');
+
 header("Content-Type: application/json");
 
 // Rate limiting: simple file-based throttle

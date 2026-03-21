@@ -1,0 +1,828 @@
+Total messages: 135 (Errors: 19, Warnings: 112)
+
+[VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:8787/:0
+[INFO] Server storage configured, syncing hidden items... @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[INFO] Server has cached library data, showing use server data option... @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[INFO] No Audible metadata cache on server, falling back to API calls @ http://localhost:8787/assets/bundle-JA5SL6WH.js:73
+[WARNING] Error fetching metadata for ASIN B00CICNV40: Error: Failed to fetch metadata for ASIN B00CICNV40: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1774248182: Error: Failed to fetch metadata for ASIN 1774248182: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B07G1CYXZW: Error: Failed to fetch metadata for ASIN B07G1CYXZW: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B00EDQTHYC: Error: Failed to fetch metadata for ASIN B00EDQTHYC: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1547608781: Error: Failed to fetch metadata for ASIN 1547608781: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002UUFOSG: Error: Failed to fetch metadata for ASIN B002UUFOSG: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B01BX27P88: Error: Failed to fetch metadata for ASIN B01BX27P88: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1774240327: Error: Failed to fetch metadata for ASIN 1774240327: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B09CRBSDHY: Error: Failed to fetch metadata for ASIN B09CRBSDHY: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B06XH4K2NB: Error: Failed to fetch metadata for ASIN B06XH4K2NB: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1721356789: Error: Failed to fetch metadata for ASIN 1721356789: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B06XC6XH9C: Error: Failed to fetch metadata for ASIN B06XC6XH9C: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B06XC6XH9C"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B01N7XNC37: Error: Failed to fetch metadata for ASIN B01N7XNC37: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B00D8GXVK4: Error: Failed to fetch metadata for ASIN B00D8GXVK4: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B01MXLSLR3: Error: Failed to fetch metadata for ASIN B01MXLSLR3: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B0CBN4PXG9: Error: Failed to fetch metadata for ASIN B0CBN4PXG9: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B0CBN4PXG9"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B0CBN3D6BR: Error: Failed to fetch metadata for ASIN B0CBN3D6BR: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B0CBN3D6BR"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V1OF70: Error: Failed to fetch metadata for ASIN B002V1OF70: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B01L082HJ2: Error: Failed to fetch metadata for ASIN B01L082HJ2: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B008CHN28K: Error: Failed to fetch metadata for ASIN B008CHN28K: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B0036GPOXI: Error: Failed to fetch metadata for ASIN B0036GPOXI: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B0036GPOXI"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0CQ3759C3: Error: Failed to fetch metadata for ASIN B0CQ3759C3: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V0QCYU: Error: Failed to fetch metadata for ASIN B002V0QCYU: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B0052EFJLE: Error: Failed to fetch metadata for ASIN B0052EFJLE: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B0052EFJLE"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B09MWP4277: Error: Failed to fetch metadata for ASIN B09MWP4277: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B08V8B2CGV: Error: Failed to fetch metadata for ASIN B08V8B2CGV: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B00IIS32NI: Error: Failed to fetch metadata for ASIN B00IIS32NI: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B003DXMA18: Error: Failed to fetch metadata for ASIN B003DXMA18: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B003DXMA18"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002UZL1CY: Error: Failed to fetch metadata for ASIN B002UZL1CY: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B008GV0PSM: Error: Failed to fetch metadata for ASIN B008GV0PSM: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V0KS9A: Error: Failed to fetch metadata for ASIN B002V0KS9A: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B004XMPFLK: Error: Failed to fetch metadata for ASIN B004XMPFLK: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V1OF70: Error: Failed to fetch metadata for ASIN B002V1OF70: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B008GV0PSM: Error: Failed to fetch metadata for ASIN B008GV0PSM: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B002V5CMZ8: Error: Failed to fetch metadata for ASIN B002V5CMZ8: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B002V5CMZ8"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0DK423PR1: Error: Failed to fetch metadata for ASIN B0DK423PR1: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B076XSGP65: Error: Failed to fetch metadata for ASIN B076XSGP65: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V5BLIW: Error: Failed to fetch metadata for ASIN B002V5BLIW: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B005M4NOPW: Error: Failed to fetch metadata for ASIN B005M4NOPW: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN 0241446783: Error: Failed to fetch metadata for ASIN 0241446783: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: 0241446783"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B01AIYE0GM: Error: Failed to fetch metadata for ASIN B01AIYE0GM: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B01AIYE0GM"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1797108220: Error: Failed to fetch metadata for ASIN 1797108220: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B074G4X4QF: Error: Failed to fetch metadata for ASIN B074G4X4QF: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B005HJJVEU: Error: Failed to fetch metadata for ASIN B005HJJVEU: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 059328741X: Error: Failed to fetch metadata for ASIN 059328741X: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B01L2PE1XI: Error: Failed to fetch metadata for ASIN B01L2PE1XI: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V01074: Error: Failed to fetch metadata for ASIN B002V01074: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B07H7Q5D3M: Error: Failed to fetch metadata for ASIN B07H7Q5D3M: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1250777488: Error: Failed to fetch metadata for ASIN 1250777488: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B06XB1MYB8: Error: Failed to fetch metadata for ASIN B06XB1MYB8: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B06XNVC3BR: Error: Failed to fetch metadata for ASIN B06XNVC3BR: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B06XNVC3BR"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B005ZUI3OA: Error: Failed to fetch metadata for ASIN B005ZUI3OA: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B017V54W6O: Error: Failed to fetch metadata for ASIN B017V54W6O: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B017V54W6O"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B017V54W6O: Error: Failed to fetch metadata for ASIN B017V54W6O: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B017V54W6O"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B01J22IXUK: Error: Failed to fetch metadata for ASIN B01J22IXUK: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B008O7DFF8: Error: Failed to fetch metadata for ASIN B008O7DFF8: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B004JY0K80: Error: Failed to fetch metadata for ASIN B004JY0K80: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V00Z16: Error: Failed to fetch metadata for ASIN B002V00Z16: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN 1405550325: Error: Failed to fetch metadata for ASIN 1405550325: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: 1405550325"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B00F68L7SK: Error: Failed to fetch metadata for ASIN B00F68L7SK: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B00F68L7SK"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V5B9SO: Error: Failed to fetch metadata for ASIN B002V5B9SO: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0B6JPQXR6: Error: Failed to fetch metadata for ASIN B0B6JPQXR6: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B00CZCA3VM: Error: Failed to fetch metadata for ASIN B00CZCA3VM: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B00CZCA3VM"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B09GCGC34C: Error: Failed to fetch metadata for ASIN B09GCGC34C: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V0JTCW: Error: Failed to fetch metadata for ASIN B002V0JTCW: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B005FRGT44: Error: Failed to fetch metadata for ASIN B005FRGT44: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B0CY5X1Z7X: Error: Failed to fetch metadata for ASIN B0CY5X1Z7X: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B0CY5X1Z7X"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B008O7DFF8: Error: Failed to fetch metadata for ASIN B008O7DFF8: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V8N86C: Error: Failed to fetch metadata for ASIN B002V8N86C: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B00P9XDQFY: Error: Failed to fetch metadata for ASIN B00P9XDQFY: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B00P9XDQFY"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V5GWHM: Error: Failed to fetch metadata for ASIN B002V5GWHM: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B01GF3SUXE: Error: Failed to fetch metadata for ASIN B01GF3SUXE: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B016N9U1XW: Error: Failed to fetch metadata for ASIN B016N9U1XW: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B016N9U1XW"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B00P0277C2: Error: Failed to fetch metadata for ASIN B00P0277C2: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0D18DYG5C: Error: Failed to fetch metadata for ASIN B0D18DYG5C: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1541435362: Error: Failed to fetch metadata for ASIN 1541435362: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1541404467: Error: Failed to fetch metadata for ASIN 1541404467: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1774240122: Error: Failed to fetch metadata for ASIN 1774240122: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1039404472: Error: Failed to fetch metadata for ASIN 1039404472: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B07HHH7L77: Error: Failed to fetch metadata for ASIN B07HHH7L77: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B005GGGC3M: Error: Failed to fetch metadata for ASIN B005GGGC3M: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1250790182: Error: Failed to fetch metadata for ASIN 1250790182: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B01CRMRR0Y: Error: Failed to fetch metadata for ASIN B01CRMRR0Y: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V0JZOO: Error: Failed to fetch metadata for ASIN B002V0JZOO: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0BGYKPR5L: Error: Failed to fetch metadata for ASIN B0BGYKPR5L: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:8787/php/audibleBookFetcher.php:0
+[WARNING] Error fetching metadata for ASIN B00YZ56KH8: Error: Failed to fetch metadata for ASIN B00YZ56KH8: Audible request failed (404): <br />
+<b>Deprecated</b>:  Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in <b>/Users/clancey/Projects/completeseries/dist/php/audibleBookFetcher.php</b> on line <b>99</b><br />
+{"status":"error","message":"Book not found on Audible for ASIN: B00YZ56KH8"}
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0BG6FWR4H: Error: Failed to fetch metadata for ASIN B0BG6FWR4H: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B013XCG8ZC: Error: Failed to fetch metadata for ASIN B013XCG8ZC: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B09LYZPFLZ: Error: Failed to fetch metadata for ASIN B09LYZPFLZ: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B09LYZPFLZ: Error: Failed to fetch metadata for ASIN B09LYZPFLZ: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B09LYYDBYH: Error: Failed to fetch metadata for ASIN B09LYYDBYH: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B09LZ58X8G: Error: Failed to fetch metadata for ASIN B09LZ58X8G: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B09M8WGGBN: Error: Failed to fetch metadata for ASIN B09M8WGGBN: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B09M8W3939: Error: Failed to fetch metadata for ASIN B09M8W3939: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0CZ4NDBSK: Error: Failed to fetch metadata for ASIN B0CZ4NDBSK: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B09Y2D2D5T: Error: Failed to fetch metadata for ASIN B09Y2D2D5T: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0CFRKX1ZY: Error: Failed to fetch metadata for ASIN B0CFRKX1ZY: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0CS72QW7R: Error: Failed to fetch metadata for ASIN B0CS72QW7R: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0D33WK48C: Error: Failed to fetch metadata for ASIN B0D33WK48C: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1774246910: Error: Failed to fetch metadata for ASIN 1774246910: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0BTMY6NVZ: Error: Failed to fetch metadata for ASIN B0BTMY6NVZ: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0D8R6VJF5: Error: Failed to fetch metadata for ASIN B0D8R6VJF5: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0CVCYB19Y: Error: Failed to fetch metadata for ASIN B0CVCYB19Y: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN 1705267947: Error: Failed to fetch metadata for ASIN 1705267947: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B003VKG69K: Error: Failed to fetch metadata for ASIN B003VKG69K: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B002V57VRC: Error: Failed to fetch metadata for ASIN B002V57VRC: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B071Y9TTHC: Error: Failed to fetch metadata for ASIN B071Y9TTHC: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0C6R933XT: Error: Failed to fetch metadata for ASIN B0C6R933XT: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0C6R9JST9: Error: Failed to fetch metadata for ASIN B0C6R9JST9: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0BVKTF9XG: Error: Failed to fetch metadata for ASIN B0BVKTF9XG: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0B2F6P4JL: Error: Failed to fetch metadata for ASIN B0B2F6P4JL: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
+[WARNING] Error fetching metadata for ASIN B0C41RZ43N: Error: Failed to fetch metadata for ASIN B0C41RZ43N: Unexpected token '<', "<br />
+<b>"... is not valid JSON
+    at Dt (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19260)
+    at async fs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:19755)
+    at async _r (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:24021)
+    at async hs (http://localhost:8787/assets/bundle-JA5SL6WH.js:35:23679)
+    at async As (http://localhost:8787/assets/bundle-JA5SL6WH.js:74:1678) @ http://localhost:8787/assets/bundle-JA5SL6WH.js:34
