@@ -243,12 +243,13 @@ export function debugLogBookViability({ book, seriesContext }) {
  * @param {{ book: any, seriesContext?: { seriesAsin?: string }, libraryASINs?: Set<string> }} params
  * @returns {void}
  */
-export function debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs }) {
+export function debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs, matchedBy }) {
   if (!isDebugEnabled()) return;
 
   const asin = book?.asin ?? "N/A";
-  const descriptionText =
-    "Do not include this book in the 'missing' list because its ASIN is already present in the library.";
+  const descriptionText = matchedBy === "title"
+    ? "Do not include this book in the 'missing' list because its title matches a book already in the library (different edition)."
+    : "Do not include this book in the 'missing' list because its ASIN is already present in the library.";
 
   const base = baseQuickFacts(book, seriesContext);
   const quickFacts = makeQuickFacts({
@@ -257,6 +258,7 @@ export function debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs
     base,
     inputs: {
       librarySize: libraryASINs instanceof Set ? libraryASINs.size : undefined,
+      matchedBy: matchedBy || "asin",
     },
     computed: {
       asinFoundInLibrary: libraryASINs instanceof Set ? libraryASINs.has(asin) : true,
@@ -264,7 +266,7 @@ export function debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs
     decision: {
       outcome: "skipped",
       reason: descriptionText,
-      reasonCodes: ["ASIN_PRESENT_IN_LIBRARY"],
+      reasonCodes: [matchedBy === "title" ? "TITLE_MATCH_IN_LIBRARY" : "ASIN_PRESENT_IN_LIBRARY"],
     },
   });
 

@@ -174,6 +174,20 @@ export function findMissingBooks(existingContent, seriesMetadata, formData) {
   ensureDebugSession(); // only starts when debug is enabled
 
   const libraryASINs = new Set(existingContent.map((bookItem) => bookItem.asin));
+
+  // Build a title lookup: Map<normalisedSeriesName, Set<normalisedTitle>>
+  // Used by gateAlreadyInLibrary to match books by title when ASINs differ (different editions)
+  const libraryTitlesBySeries = new Map();
+  for (const item of existingContent) {
+    const nSeries = normaliseText(item.series);
+    const nTitle = normaliseText(item.title);
+    if (!nSeries || !nTitle) continue;
+    if (!libraryTitlesBySeries.has(nSeries)) {
+      libraryTitlesBySeries.set(nSeries, new Set());
+    }
+    libraryTitlesBySeries.get(nSeries).add(nTitle);
+  }
+
   const missingBooks = [];
 
   // Ordered list of gates; behavior unchanged
@@ -211,6 +225,7 @@ export function findMissingBooks(existingContent, seriesMetadata, formData) {
         existingContent,
         missingBooks,
         libraryASINs,
+        libraryTitlesBySeries,
         formData,
       };
 
@@ -325,12 +340,27 @@ function gateNotViable(context) {
  * @returns {any}
  */
 function gateAlreadyInLibrary(context) {
-  const { asin, libraryASINs, book, seriesContext } = context;
-  const alreadyInLibrary = libraryASINs.has(asin);
-  if (alreadyInLibrary) {
+  const { asin, libraryASINs, book, seriesContext, title, bookSeriesArray, libraryTitlesBySeries } = context;
+
+  // Match by ASIN (exact edition match)
+  if (libraryASINs.has(asin)) {
     debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs });
     return true;
   }
+
+  // Match by normalised title within the same series (handles different editions/narrators)
+  if (libraryTitlesBySeries && title) {
+    const nTitle = normaliseText(title);
+    for (const seriesEntry of bookSeriesArray) {
+      const nSeries = normaliseText(seriesEntry?.name ?? "");
+      const titlesInSeries = libraryTitlesBySeries.get(nSeries);
+      if (titlesInSeries?.has(nTitle)) {
+        debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs, matchedBy: "title" });
+        return true;
+      }
+    }
+  }
+
   return false;
 }
 
