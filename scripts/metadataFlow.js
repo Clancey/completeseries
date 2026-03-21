@@ -148,7 +148,7 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
 
         // Safety net: fix books with empty series array.
         // Since we fetched from the series endpoint, these books belong to this series.
-        const seriesName = audiMetaResponse.find((b) => b.series?.length > 0)?.series?.[0]?.name || "";
+        const seriesName = audiMetaResponse.find((book) => book.series?.length > 0)?.series?.[0]?.name || "";
 
         const fixedResponse = audiMetaResponse.map((book) => {
           if (!book.series || book.series.length === 0) {

@@ -36,7 +36,7 @@ import {
   ensureWorkingMemoryReady,
   clearLocalStorageByIdentifier,
 } from "./localStorage.js";
-import { checkServerStatus, triggerServerRefresh, isServerConfigured, getServerLibraryData, getServerAudibleRegion } from "./serverSync.js";
+import { checkServerStatus, triggerServerRefresh, getServerLibraryData, getServerAudibleRegion } from "./serverSync.js";
 import { syncHiddenItemsWithServer } from "./visibility.js";
 
 // Stores current data fetched from AudiobookShelf
@@ -58,14 +58,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Check server configuration and sync hidden items if configured
   const serverStatus = await checkServerStatus();
   if (serverStatus.configured) {
-    console.log("Server storage configured, syncing hidden items...");
+    console.info("Server storage configured, syncing hidden items...");
     await syncHiddenItemsWithServer();
     initServerRefreshUI(serverStatus);
 
     // Check if server has cached data - if so, offer to use it
     const serverData = await getServerLibraryData();
     if (serverData.hasData) {
-      console.log("Server has cached library data, showing use server data option...");
+      console.info("Server has cached library data, showing use server data option...");
       showUseServerDataOption(serverData);
     } else {
       // Server configured but no data yet - show prompt to refresh first
