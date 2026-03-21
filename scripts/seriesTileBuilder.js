@@ -89,7 +89,7 @@ function generateSeriesTiles(seriesData, outputContainer) {
   const hiddenBooksInSeries = totalHiddenInSeries(seriesTitle);
   const visibleMissingCount = missingBooksCount - hiddenBooksInSeries;
 
-  if (visibleMissingCount === 0) toggleElementVisibilityFullEntity(tileContainerWrapper, false);
+  if (visibleMissingCount <= 0) toggleElementVisibilityFullEntity(tileContainerWrapper, false);
 
   addSeriesBadge(tileInnerContainer, visibleMissingCount);
 

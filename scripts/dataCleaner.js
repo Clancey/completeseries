@@ -1137,7 +1137,10 @@ export function groupBooksBySeries(missingBooks, includeSubSeries) {
     }
   }
 
-  return sortSeriesAlphabetically(groupedBySeries);
+  // Filter out series groups with no actual missing books
+  const nonEmptyGroups = groupedBySeries.filter((group) => group.books.length > 0);
+
+  return sortSeriesAlphabetically(nonEmptyGroups);
 }
 
 /**
