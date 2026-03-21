@@ -19,6 +19,7 @@ let processStartTime; // Tracks when the batch process started
  */
 export async function collectBookMetadata(existingSeries, audibleRegion, includeSubSeries, cacheOnly = false) {
   const seriesAsins = [];
+  const seriesToBookMap = {}; // Maps seriesAsin -> bookAsin for the sims endpoint
   const totalSeries = existingSeries.length;
   let processedCount = 0;
 
@@ -73,7 +74,10 @@ export async function collectBookMetadata(existingSeries, audibleRegion, include
       if (!metadata || !metadata.series) continue;
 
       for (const bookSeries of metadata.series) {
-        if (!seriesAsins.includes(bookSeries.asin)) seriesAsins.push(bookSeries.asin);
+        if (!seriesAsins.includes(bookSeries.asin)) {
+          seriesAsins.push(bookSeries.asin);
+          seriesToBookMap[bookSeries.asin] = bookASIN;
+        }
 
         if (!includeSubSeries) break;
       }
@@ -84,7 +88,7 @@ export async function collectBookMetadata(existingSeries, audibleRegion, include
     processedCount++;
   }
 
-  return seriesAsins;
+  return { seriesAsins, seriesToBookMap };
 }
 
 /**
@@ -97,7 +101,7 @@ export async function collectBookMetadata(existingSeries, audibleRegion, include
  * @param {boolean} [cacheOnly=false] - When true, only use cached data, skip API calls
  * @returns {Promise<Array<Object>>} Array of { seriesAsin, response } entries
  */
-export async function collectSeriesMetadata(seriesAsins, audibleRegion, existingContent, cacheOnly = false) {
+export async function collectSeriesMetadata(seriesAsins, audibleRegion, existingContent, cacheOnly = false, seriesToBookMap = {}) {
   const seriesMetadataResults = [];
   const totalSeries = seriesAsins.length;
   let processedCount = 0;
@@ -125,8 +129,10 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
         }
 
         // Fetch series metadata from Audible via PHP proxy
+        // Pass the known book ASIN as a hint so the sims endpoint can be used directly
+        const bookAsinHint = seriesToBookMap[seriesAsin] || "";
         const { audiMetaResponse, responseHeaders = {} } =
-          (await fetchAudibleMetadata(seriesAsin, audibleRegion, "series")) ?? {};
+          (await fetchAudibleMetadata(seriesAsin, audibleRegion, "series", bookAsinHint)) ?? {};
 
         if (!audiMetaResponse || typeof audiMetaResponse !== "object") {
           const err = new Error("Audible metadata missing or malformed.");

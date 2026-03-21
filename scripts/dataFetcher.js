@@ -227,12 +227,13 @@ export async function fetchAudiobookShelfLibraries(formData) {
  * @returns {Promise<Object>} - Metadata response from Audible
  * @throws {Error} - If the request fails or response is invalid
  */
-export async function fetchAudibleMetadata(itemASIN, region, itemType) {
+export async function fetchAudibleMetadata(itemASIN, region, itemType, bookAsinHint = "") {
   try {
     return await fetchAudimetaMetadata({
       asin: itemASIN,
       region,
       type: itemType,
+      bookAsin: bookAsinHint,
     });
   } catch (error) {
     throw new Error(`Failed to fetch metadata for ASIN ${itemASIN}: ${error.message}`);

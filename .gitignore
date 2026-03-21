@@ -7,6 +7,8 @@ node_modules
 .vscode
 assets/.DS_Store
 dist
+logs/
+.playwright-mcp/
 php/.DS_Store
 scripts/.DS_Store
 styles/.DS_Store

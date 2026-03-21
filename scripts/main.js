@@ -263,15 +263,15 @@ function populateLibraryCheckboxes(librariesList, parentContainer) {
  */
 async function fetchAllMetadataForBooks(existingContent, formData, cacheOnly = false) {
   // Extract all series ASINs by examining first-book metadata
-  const seriesASINs = await collectBookMetadata(
+  const { seriesAsins, seriesToBookMap } = await collectBookMetadata(
     existingContent.seriesFirstASIN,
     formData.region,
     formData.includeSubSeries,
     cacheOnly
   );
 
-  // Use those ASINs to get full series details
-  return await collectSeriesMetadata(seriesASINs, formData.region, existingContent, cacheOnly);
+  // Use those ASINs to get full series details, passing book ASIN hints for the API
+  return await collectSeriesMetadata(seriesAsins, formData.region, existingContent, cacheOnly, seriesToBookMap);
 }
 
 /**

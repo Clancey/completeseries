@@ -17,7 +17,7 @@ import { setRateMessage } from "./uiFeedback.js";
  */
 export async function fetchAudimetaMetadata(params) {
   // Destructure input with defaults
-  const { type = "book", asin = "", region = "uk" } = params;
+  const { type = "book", asin = "", region = "uk", bookAsin = "" } = params;
 
   // Validate required fields
   if (!type || !asin || !region) throw new Error("Missing required fields: type, asin, or region.");
@@ -25,13 +25,20 @@ export async function fetchAudimetaMetadata(params) {
   // Clean up input values
   const trimmedASIN = asin.trim();
   const regionCode = region.trim().toLowerCase();
+  const trimmedBookAsin = bookAsin.trim();
 
   // Route to the appropriate PHP endpoint
   const endpoint =
     type === "book" ? "php/audibleBookFetcher.php" : "php/audibleSeriesFetcher.php";
 
+  // Build request body — include bookAsin hint for series lookups
+  const requestBody = { asin: trimmedASIN, region: regionCode };
+  if (type === "series" && trimmedBookAsin) {
+    requestBody.bookAsin = trimmedBookAsin;
+  }
+
   // Perform the fetch request with retry logic for rate limits
-  return await fetchWithRateLimitRetry(endpoint, trimmedASIN, regionCode, type);
+  return await fetchWithRateLimitRetry(endpoint, requestBody, type);
 }
 
 /**
@@ -45,7 +52,7 @@ export async function fetchAudimetaMetadata(params) {
  * @param {number} maxRetries - Maximum number of retries (default: 3)
  * @returns {Promise<Object>} - The response data and headers
  */
-async function fetchWithRateLimitRetry(endpoint, asin, region, type, maxRetries = 3) {
+async function fetchWithRateLimitRetry(endpoint, requestBody, type, maxRetries = 3) {
   let attempts = 0;
 
   while (attempts < maxRetries) {
@@ -55,7 +62,7 @@ async function fetchWithRateLimitRetry(endpoint, asin, region, type, maxRetries 
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify({ asin, region }),
+      body: JSON.stringify(requestBody),
     });
 
     // Handle rate limit (429) with wait and retry
