@@ -5,6 +5,7 @@ import { storeMetadataToLocalStorage, removeFromStorage } from "./localStorage.j
 
 // Rate limit configuration
 const rateLimitResetTime = 60000; // Time in milliseconds before rate limit resets
+const seriesMetadataCacheTtlMs = 7 * 24 * 60 * 60 * 1000;
 let processStartTime; // Tracks when the batch process started
 
 /**
@@ -112,11 +113,10 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
     try {
       let seriesMetadata = findFromStorage("seriesAsin", seriesAsin, "existingBookMetadata");
 
-      // Invalidate cached entries that contain future-dated or unavailable books,
-      // since upcoming release dates change frequently.
+      // Invalidate cached entries that may hide newly added or newly released books.
       // Skip invalidation in cacheOnly mode — stale data is better than no data
       // when we can't re-fetch from the API.
-      if (!cacheOnly && seriesMetadata && hasUnreleasedBooks(seriesMetadata)) {
+      if (!cacheOnly && seriesMetadata && shouldRefreshCachedSeriesMetadata(seriesMetadata)) {
         removeFromStorage("seriesAsin", seriesAsin, "existingBookMetadata");
         seriesMetadata = null;
       }
@@ -171,6 +171,7 @@ export async function collectSeriesMetadata(seriesAsins, audibleRegion, existing
         seriesMetadata = {
           seriesAsin,
           response: fixedResponse,
+          fetchedAt: new Date().toISOString(),
         };
 
         storeMetadataToLocalStorage(seriesMetadata, "existingBookMetadata");
@@ -283,6 +284,23 @@ function hasUnreleasedBooks(seriesMetadata) {
     const release = new Date(book.releaseDate);
     return !isNaN(release.getTime()) && release > now;
   });
+}
+
+/**
+ * Check if a cached series entry should be refreshed.
+ * Legacy entries without `fetchedAt` are refreshed once so caches created before
+ * a later Audible release do not permanently hide that new book.
+ *
+ * @param {Object} seriesMetadata - Cached entry with { seriesAsin, response: book[], fetchedAt?: string }
+ * @returns {boolean} True when the cache should be refreshed from Audible.
+ */
+export function shouldRefreshCachedSeriesMetadata(seriesMetadata) {
+  if (hasUnreleasedBooks(seriesMetadata)) return true;
+
+  const fetchedAtMs = Date.parse(seriesMetadata?.fetchedAt ?? "");
+  if (!Number.isFinite(fetchedAtMs)) return true;
+
+  return Date.now() - fetchedAtMs > seriesMetadataCacheTtlMs;
 }
 
 function extractBookNumber(title) {

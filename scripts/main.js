@@ -13,7 +13,11 @@ import {
   showDebugButtons,
   enableExportButtons,
 } from "./uiFeedback.js";
-import { collectBookMetadata, collectSeriesMetadata } from "./metadataFlow.js";
+import {
+  collectBookMetadata,
+  collectSeriesMetadata,
+  shouldRefreshCachedSeriesMetadata,
+} from "./metadataFlow.js";
 import { fetchExistingContent, fetchAudiobookShelfLibraries } from "./dataFetcher.js";
 import { findMissingBooks, groupBooksBySeries } from "./dataCleaner.js";
 import { renderSeriesAndBookTiles } from "./seriesTileBuilder.js";
@@ -698,26 +702,44 @@ async function processServerData(serverData, cacheOnly = true) {
     // so findFromStorage() can locate entries during cacheOnly mode
     if (cacheOnly) {
       const fullServerData = await fetchServerData();
-      let hasAudibleCache = false;
+      let hasSeriesMetadataCache = false;
+      let hasFirstBookMetadataCache = false;
+      let hasStaleSeriesMetadataCache = false;
 
       if (fullServerData) {
         // Load Audible series metadata (existingBookMetadata) into working cache
-        if (Array.isArray(fullServerData.existingBookMetadata) && fullServerData.existingBookMetadata.length > 0) {
-          await storeUpdateFullValueForLocalStorage(fullServerData.existingBookMetadata, "existingBookMetadata");
-          hasAudibleCache = true;
+        if (
+          Array.isArray(fullServerData.existingBookMetadata) &&
+          fullServerData.existingBookMetadata.length > 0
+        ) {
+          hasStaleSeriesMetadataCache = fullServerData.existingBookMetadata.some(
+            shouldRefreshCachedSeriesMetadata
+          );
+          await storeUpdateFullValueForLocalStorage(
+            fullServerData.existingBookMetadata,
+            "existingBookMetadata"
+          );
+          hasSeriesMetadataCache = true;
         }
 
         // Load Audible book metadata (audibleFirstBookASINs) into working cache
         // This is stored separately from the ABS library data (existingFirstBookASINs)
-        if (Array.isArray(fullServerData.audibleFirstBookASINs) && fullServerData.audibleFirstBookASINs.length > 0) {
-          await storeUpdateFullValueForLocalStorage(fullServerData.audibleFirstBookASINs, "existingFirstBookASINs");
-          hasAudibleCache = true;
+        if (
+          Array.isArray(fullServerData.audibleFirstBookASINs) &&
+          fullServerData.audibleFirstBookASINs.length > 0
+        ) {
+          await storeUpdateFullValueForLocalStorage(
+            fullServerData.audibleFirstBookASINs,
+            "existingFirstBookASINs"
+          );
+          hasFirstBookMetadataCache = true;
         }
       }
 
-      // If server has no Audible metadata cache, fall back to making API calls
-      if (!hasAudibleCache) {
-        console.info("No Audible metadata cache on server, falling back to API calls");
+      // Cache-only mode needs both first-book and series Audible metadata.
+      // If either part is absent or stale, fall back to API calls so results stay accurate.
+      if (!hasSeriesMetadataCache || !hasFirstBookMetadataCache || hasStaleSeriesMetadataCache) {
+        console.info("Audible metadata cache unavailable or stale, falling back to API calls");
         cacheOnly = false;
       }
     }

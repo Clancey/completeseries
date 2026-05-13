@@ -97,7 +97,7 @@ Trim and lowercase
  * @returns {any}
  */
 function normaliseText(input) {
-  return (input ?? "")
+  const normalized = (input ?? "")
     .toString()
     .normalize("NFKD")
     .replace(/\p{Diacritic}/gu, "") // remove diacritics (é → e)
@@ -105,6 +105,62 @@ function normaliseText(input) {
     .replace(/\s+/g, " ") // collapse whitespace
     .trim()
     .toLowerCase();
+
+  return normalized.replace(/\bvs\b/g, "versus");
+}
+
+function normaliseSeriesNameList(seriesEntries, additionalNames = []) {
+  const names = [];
+  for (const seriesEntry of Array.isArray(seriesEntries) ? seriesEntries : []) {
+    const normalized = normaliseText(seriesEntry?.name ?? seriesEntry?.series ?? seriesEntry);
+    if (normalized) names.push(normalized);
+  }
+  for (const name of additionalNames) {
+    const normalized = normaliseText(name);
+    if (normalized) names.push(normalized);
+  }
+  return [...new Set(names)];
+}
+
+function getEdgeExtraText(longerTitle, shorterTitle) {
+  if (!longerTitle || !shorterTitle || longerTitle === shorterTitle) return "";
+  if (longerTitle.startsWith(`${shorterTitle} `)) {
+    return longerTitle.slice(shorterTitle.length).trim();
+  }
+  if (longerTitle.endsWith(` ${shorterTitle}`)) {
+    return longerTitle.slice(0, -shorterTitle.length).trim();
+  }
+  return null;
+}
+
+function textContainsSeriesDescriptor(extraText, seriesNames) {
+  if (!extraText) return false;
+  return seriesNames.some(
+    (seriesName) =>
+      seriesName.length >= 4 &&
+      (extraText === seriesName ||
+        extraText.startsWith(`${seriesName} `) ||
+        extraText.endsWith(` ${seriesName}`) ||
+        extraText.includes(` ${seriesName} `))
+  );
+}
+
+function titlesRepresentSameBook(candidateTitle, libraryTitle, seriesNames) {
+  const normalizedCandidateTitle = normaliseText(candidateTitle);
+  const normalizedLibraryTitle = normaliseText(libraryTitle);
+
+  if (!normalizedCandidateTitle || !normalizedLibraryTitle) return false;
+  if (normalizedCandidateTitle === normalizedLibraryTitle) return true;
+  if (normalizedCandidateTitle.length < 4 || normalizedLibraryTitle.length < 4) return false;
+
+  const candidateIsLonger = normalizedCandidateTitle.length > normalizedLibraryTitle.length;
+  const longerTitle = candidateIsLonger ? normalizedCandidateTitle : normalizedLibraryTitle;
+  const shorterTitle = candidateIsLonger ? normalizedLibraryTitle : normalizedCandidateTitle;
+  const extraText = getEdgeExtraText(longerTitle, shorterTitle);
+
+  if (extraText === null) return false;
+
+  return textContainsSeriesDescriptor(extraText, seriesNames);
 }
 
 /**
@@ -188,13 +244,18 @@ export function findMissingBooks(existingContent, seriesMetadata, formData) {
     libraryTitlesBySeries.get(nSeries).add(nTitle);
   }
 
-  // Also build a global title set for cross-series matching
-  // Handles cases where Audible uses different series names (e.g. "vs." vs "versus",
-  // "Author's Preferred Order" vs "Publication Order")
-  const allLibraryTitles = new Set();
+  // Also build global title entries for cross-series matching.
+  // This handles exact alternate-series matches without broad substring matches
+  // that can confuse numbered sequels (e.g. "Series" vs "Series 4").
+  const allLibraryTitleEntries = [];
   for (const item of existingContent) {
     const nTitle = normaliseText(item.title);
-    if (nTitle) allLibraryTitles.add(nTitle);
+    if (nTitle) {
+      allLibraryTitleEntries.push({
+        title: item.title,
+        series: item.series,
+      });
+    }
   }
 
   const missingBooks = [];
@@ -235,7 +296,7 @@ export function findMissingBooks(existingContent, seriesMetadata, formData) {
         missingBooks,
         libraryASINs,
         libraryTitlesBySeries,
-        allLibraryTitles,
+        allLibraryTitleEntries,
         formData,
       };
 
@@ -350,7 +411,16 @@ function gateNotViable(context) {
  * @returns {any}
  */
 function gateAlreadyInLibrary(context) {
-  const { asin, libraryASINs, book, seriesContext, title, bookSeriesArray, libraryTitlesBySeries, allLibraryTitles } = context;
+  const {
+    asin,
+    libraryASINs,
+    book,
+    seriesContext,
+    title,
+    bookSeriesArray,
+    libraryTitlesBySeries,
+    allLibraryTitleEntries,
+  } = context;
 
   // Match by ASIN (exact edition match)
   if (libraryASINs.has(asin)) {
@@ -358,39 +428,33 @@ function gateAlreadyInLibrary(context) {
     return true;
   }
 
-  // Match by normalised title within the same series (handles different editions/narrators)
-  // Uses contains matching to handle cases where Audible prefixes series names to titles
-  // e.g. Audible: "The Chronicles Of Narnia: The Magician's Nephew" vs library: "The Magician's Nephew"
+  // Match by title within the same series (handles different editions/narrators).
+  // Flexible prefix/suffix matches are allowed only when the extra text is a
+  // series descriptor, not a bare sequel number.
   if (libraryTitlesBySeries && title) {
-    const nTitle = normaliseText(title);
-    if (nTitle.length >= 4) {
-      for (const seriesEntry of bookSeriesArray) {
-        const nSeries = normaliseText(seriesEntry?.name ?? "");
-        const titlesInSeries = libraryTitlesBySeries.get(nSeries);
-        if (!titlesInSeries) continue;
-        for (const libTitle of titlesInSeries) {
-          if (libTitle.length < 4) continue;
-          if (nTitle === libTitle || nTitle.includes(libTitle) || libTitle.includes(nTitle)) {
-            debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs, matchedBy: "title" });
-            return true;
-          }
+    for (const seriesEntry of bookSeriesArray) {
+      const nSeries = normaliseText(seriesEntry?.name ?? "");
+      const titlesInSeries = libraryTitlesBySeries.get(nSeries);
+      if (!titlesInSeries) continue;
+
+      const seriesNames = normaliseSeriesNameList(bookSeriesArray, [seriesEntry?.name]);
+      for (const libTitle of titlesInSeries) {
+        if (titlesRepresentSameBook(title, libTitle, seriesNames)) {
+          debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs, matchedBy: "title" });
+          return true;
         }
       }
     }
   }
 
-  // Fallback: match title globally across all library books (handles mismatched series names)
-  // e.g. "Alcatraz vs. the Evil Librarians" vs "Alcatraz versus the Evil Librarians"
-  // or books listed under different series orderings (Author's vs Publication order)
-  if (allLibraryTitles && title) {
-    const nTitle = normaliseText(title);
-    if (nTitle.length >= 4) {
-      for (const libTitle of allLibraryTitles) {
-        if (libTitle.length < 4) continue;
-        if (nTitle === libTitle || nTitle.includes(libTitle) || libTitle.includes(nTitle)) {
-          debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs, matchedBy: "title" });
-          return true;
-        }
+  // Fallback: match title globally across all library books when series names differ
+  // between Audible and AudiobookShelf. Keep the same strict title rules here.
+  if (allLibraryTitleEntries && title) {
+    for (const libraryEntry of allLibraryTitleEntries) {
+      const seriesNames = normaliseSeriesNameList(bookSeriesArray, [libraryEntry.series]);
+      if (titlesRepresentSameBook(title, libraryEntry.title, seriesNames)) {
+        debugLogBookAlreadyInLibrary({ book, seriesContext, libraryASINs, matchedBy: "title" });
+        return true;
       }
     }
   }
