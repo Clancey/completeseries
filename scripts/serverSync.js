@@ -243,7 +243,7 @@ export async function triggerServerRefresh() {
  * If not configured, returns the local items unchanged.
  *
  * @param {Array} localHiddenItems - Local hidden items array
- * @returns {Promise<Array>} - Merged hidden items array (or local if not configured)
+ * @returns {Promise<Array>} - Server hidden items array (or local if not configured)
  */
 export async function syncHiddenItems(localHiddenItems) {
   const status = await checkServerStatus();
@@ -259,17 +259,7 @@ export async function syncHiddenItems(localHiddenItems) {
       return localHiddenItems;
     }
 
-    const serverHiddenItems = serverData.hiddenItems || [];
-
-    // Merge: combine unique items from both sources
-    const merged = mergeHiddenItems(localHiddenItems, serverHiddenItems);
-
-    // If there are differences, save merged result to server
-    if (merged.length !== serverHiddenItems.length || hasNewItems(merged, serverHiddenItems)) {
-      await saveServerData({ hiddenItems: merged });
-    }
-
-    return merged;
+    return Array.isArray(serverData.hiddenItems) ? serverData.hiddenItems : [];
   } catch (error) {
     console.warn("Server sync failed, using local data:", error.message);
     return localHiddenItems;
@@ -290,43 +280,5 @@ export function saveHiddenItemsToServer(hiddenItems) {
   // Fire and forget - don't block UI
   saveServerData({ hiddenItems }).catch((err) => {
     console.warn("Failed to sync hidden items to server:", err.message);
-  });
-}
-
-/**
- * Merge two hidden items arrays, removing duplicates by ASIN.
- *
- * @param {Array} local - Local hidden items
- * @param {Array} server - Server hidden items
- * @returns {Array} - Merged array with duplicates removed
- */
-function mergeHiddenItems(local, server) {
-  const seen = new Set();
-  const merged = [];
-
-  // Server items first (source of truth)
-  for (const item of [...server, ...local]) {
-    const key = item.asin || `${item.type}-${item.series}-${item.title}`;
-    if (!seen.has(key)) {
-      seen.add(key);
-      merged.push(item);
-    }
-  }
-
-  return merged;
-}
-
-/**
- * Check if merged array has items not in server array.
- *
- * @param {Array} merged - Merged items
- * @param {Array} server - Server items
- * @returns {boolean}
- */
-function hasNewItems(merged, server) {
-  const serverKeys = new Set(server.map((item) => item.asin || `${item.type}-${item.series}-${item.title}`));
-  return merged.some((item) => {
-    const key = item.asin || `${item.type}-${item.series}-${item.title}`;
-    return !serverKeys.has(key);
   });
 }
