@@ -156,12 +156,24 @@ export function totalHiddenInSeries(seriesName) {
  */
 export async function syncHiddenItemsWithServer() {
   const localItems = getHiddenItems();
-  const mergedItems = await syncHiddenItems(localItems);
+  const serverItems = await syncHiddenItems(localItems);
 
-  // Update local storage with merged data (only if different)
-  if (mergedItems.length !== localItems.length) {
-    storeUpdateFullValueForLocalStorage(mergedItems, VISIBILITY_KEY);
+  // Update local storage with server data whenever contents differ.
+  if (!hiddenItemsMatch(localItems, serverItems)) {
+    await storeUpdateFullValueForLocalStorage(serverItems, VISIBILITY_KEY);
   }
 
-  return mergedItems;
+  return serverItems;
+}
+
+function hiddenItemKey(item) {
+  return [item?.type ?? "", item?.series ?? "", item?.asin ?? "", item?.title ?? ""].join("\0");
+}
+
+function hiddenItemsMatch(firstItems, secondItems) {
+  if (!Array.isArray(firstItems) || !Array.isArray(secondItems)) return false;
+  if (firstItems.length !== secondItems.length) return false;
+
+  const secondKeys = new Set(secondItems.map(hiddenItemKey));
+  return firstItems.every((item) => secondKeys.has(hiddenItemKey(item)));
 }
