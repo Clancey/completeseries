@@ -145,12 +145,29 @@ function textContainsSeriesDescriptor(extraText, seriesNames) {
   );
 }
 
+function normaliseTitleForEditionComparison(title) {
+  const normalizedTitle = normaliseText(title);
+  const hasDramatizedMarker = /\b(?:dramatized|dramatised)\s+adaptation\b/.test(normalizedTitle);
+
+  if (!hasDramatizedMarker) return normalizedTitle;
+
+  return normalizedTitle
+    .replace(/\b(?:dramatized|dramatised)\s+adaptation\b/g, " ")
+    .replace(/\b\d+\s+of\s+\d+\b/g, " ")
+    .replace(/\bpart\s+\d+\b/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function titlesRepresentSameBook(candidateTitle, libraryTitle, seriesNames) {
   const normalizedCandidateTitle = normaliseText(candidateTitle);
   const normalizedLibraryTitle = normaliseText(libraryTitle);
+  const equivalentCandidateTitle = normaliseTitleForEditionComparison(candidateTitle);
+  const equivalentLibraryTitle = normaliseTitleForEditionComparison(libraryTitle);
 
   if (!normalizedCandidateTitle || !normalizedLibraryTitle) return false;
   if (normalizedCandidateTitle === normalizedLibraryTitle) return true;
+  if (equivalentCandidateTitle && equivalentCandidateTitle === equivalentLibraryTitle) return true;
   if (normalizedCandidateTitle.length < 4 || normalizedLibraryTitle.length < 4) return false;
 
   const candidateIsLonger = normalizedCandidateTitle.length > normalizedLibraryTitle.length;
@@ -1046,6 +1063,48 @@ function doesTitleSubtileMatchMissingExists(title, subtitle, bookSeriesArray, mi
   return false;
 }
 
+function parseSeriesPositionRanges(position) {
+  const positionText = String(position ?? "").trim();
+  if (!positionText || positionText === "N/A") return [];
+
+  const ranges = [];
+  const rangePattern = /(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)/g;
+  const textWithoutRanges = positionText.replace(rangePattern, (_, start, end) => {
+    const rangeStart = Number.parseFloat(start);
+    const rangeEnd = Number.parseFloat(end);
+    if (Number.isFinite(rangeStart) && Number.isFinite(rangeEnd)) {
+      ranges.push({
+        start: Math.min(rangeStart, rangeEnd),
+        end: Math.max(rangeStart, rangeEnd),
+      });
+    }
+    return " ";
+  });
+
+  const numberPattern = /#?\s*(\d+(?:\.\d+)?)/g;
+  for (const match of textWithoutRanges.matchAll(numberPattern)) {
+    const value = Number.parseFloat(match[1]);
+    if (Number.isFinite(value)) ranges.push({ start: value, end: value });
+  }
+
+  return ranges;
+}
+
+function seriesPositionsOverlap(firstPosition, secondPosition) {
+  const firstRanges = parseSeriesPositionRanges(firstPosition);
+  const secondRanges = parseSeriesPositionRanges(secondPosition);
+
+  if (firstRanges.length === 0 || secondRanges.length === 0) {
+    return String(firstPosition ?? "") === String(secondPosition ?? "");
+  }
+
+  return firstRanges.some((firstRange) =>
+    secondRanges.some(
+      (secondRange) => firstRange.start <= secondRange.end && secondRange.start <= firstRange.end
+    )
+  );
+}
+
 /**
  * Determines whether a book has the same title and subtitle as an existing book in the library.
  *
@@ -1064,8 +1123,8 @@ function hasSameSeriesPosition(bookSeriesArray, existingContent) {
   for (const existingBook of existingContent) {
     for (const seriesEntry of bookSeriesArray) {
       if (
-        existingBook.seriesPosition === seriesEntry.position &&
-        existingBook.series === seriesEntry.name
+        existingBook.series === seriesEntry.name &&
+        seriesPositionsOverlap(existingBook.seriesPosition, seriesEntry.position)
       )
         return true;
     }
@@ -1093,8 +1152,8 @@ function hasSameSeriesPositionMissingExists(bookSeriesArray, missingBooks) {
     for (const seriesEntry of bookSeriesArray) {
       for (const existingMissingBookSeries of existingMissingBook.series) {
         if (
-          existingMissingBookSeries.position === seriesEntry.position &&
-          existingMissingBookSeries.name === seriesEntry.name
+          existingMissingBookSeries.name === seriesEntry.name &&
+          seriesPositionsOverlap(existingMissingBookSeries.position, seriesEntry.position)
         )
           return true;
       }
@@ -1165,6 +1224,17 @@ function isBookUnabridged(bookMetadata) {
   return bookMetadata.bookFormat === "unabridged";
 }
 
+function getSeriesEntriesForGrouping(bookMetadata, includeSubSeries) {
+  const seriesEntries = Array.isArray(bookMetadata.series) ? bookMetadata.series : [];
+  if (includeSubSeries) return seriesEntries;
+
+  const targetSeriesEntry = seriesEntries.find(
+    (seriesEntry) => seriesEntry.asin && seriesEntry.asin === bookMetadata.seriesAsin
+  );
+
+  return targetSeriesEntry ? [targetSeriesEntry] : seriesEntries.slice(0, 1);
+}
+
 /**
  * Groups a flat list of book records by their series name.
  *
@@ -1182,7 +1252,7 @@ export function groupBooksBySeries(missingBooks, includeSubSeries) {
   const groupedBySeries = [];
 
   for (const bookMetadata of missingBooks) {
-    for (const selectedSeries of bookMetadata.series) {
+    for (const selectedSeries of getSeriesEntriesForGrouping(bookMetadata, includeSubSeries)) {
       const seriesName = selectedSeries.name || "No Series";
 
       let existingGroup = groupedBySeries.find((groupEntry) => groupEntry.series === seriesName);
@@ -1196,8 +1266,6 @@ export function groupBooksBySeries(missingBooks, includeSubSeries) {
       }
 
       existingGroup.books.push(bookMetadata);
-
-      if (!includeSubSeries) break;
     }
   }
 

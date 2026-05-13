@@ -261,28 +261,26 @@ function delay(delayInMilliseconds) {
 }
 
 /**
- * Check if a cached series metadata entry may contain stale release data.
- * Returns true when any book is either:
- *  - Upcoming (releaseDate in the future) — dates change frequently, or
- *  - Unavailable (isAvailable === false) — the book hasn't been released yet,
- *    so its cached date (even if now past) may have been pushed back.
+ * Check if a cached series metadata entry contains an unavailable book whose
+ * non-placeholder release date has passed. Future releases and Audible's 2200
+ * placeholders should not make a freshly fetched cache stale immediately.
  *
  * @param {Object} seriesMetadata - Cached entry with { seriesAsin, response: book[] }
  * @returns {boolean} True if the cache should be refreshed.
  */
-function hasUnreleasedBooks(seriesMetadata) {
+function hasReleasedUnavailableBooks(seriesMetadata) {
   const books = seriesMetadata?.response;
   if (!Array.isArray(books)) return false;
 
-  const now = new Date();
-  return books.some((book) => {
-    // Book explicitly marked as unavailable — likely unreleased
-    if (book.isAvailable === false) return true;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-    // Book with a future release date
-    if (!book.releaseDate) return false;
+  return books.some((book) => {
+    if (book.isAvailable !== false || !book.releaseDate) return false;
     const release = new Date(book.releaseDate);
-    return !isNaN(release.getTime()) && release > now;
+    if (isNaN(release.getTime()) || release.getFullYear() >= 2100) return false;
+    release.setHours(0, 0, 0, 0);
+    return release <= today;
   });
 }
 
@@ -295,12 +293,11 @@ function hasUnreleasedBooks(seriesMetadata) {
  * @returns {boolean} True when the cache should be refreshed from Audible.
  */
 export function shouldRefreshCachedSeriesMetadata(seriesMetadata) {
-  if (hasUnreleasedBooks(seriesMetadata)) return true;
-
   const fetchedAtMs = Date.parse(seriesMetadata?.fetchedAt ?? "");
   if (!Number.isFinite(fetchedAtMs)) return true;
 
-  return Date.now() - fetchedAtMs > seriesMetadataCacheTtlMs;
+  return Date.now() - fetchedAtMs > seriesMetadataCacheTtlMs ||
+    hasReleasedUnavailableBooks(seriesMetadata);
 }
 
 function extractBookNumber(title) {
